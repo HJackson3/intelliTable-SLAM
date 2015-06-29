@@ -48,6 +48,7 @@ global Map
 % 0. UPDATE ROB AND SEN INFO FROM MAP
 Rob = map2rob(Rob);
 Sen = map2sen(Sen);
+Sen.imGrid.usedCell = false(5,5);
 
 % 1. PROJECT ALL LMKS - get all expectations
 for lmk = find([Lmk.used])
@@ -76,14 +77,17 @@ if any(vis) % Consider only visible observations
         for i = 1:cells(1)
             for j = 1:cells(2)
             
+                % TO-DO here: Make it so the values of usedCell update back
+                % to zero at the correct time
+                
                 % if within x coords of cell(i,j) AND within y coords of cell(i,j)
-                 if (any(lmk.meas.y) > sen.imGrid.xticks(i))...
-                        & (any(lmk.meas.y) > sen.imGrid.yticks(i))...
-                        & (any(lmk.meas.y) < sen.imGrid.xticks(i+1))...
-                        & (any(lmk.meas.y) < sen.imGrid.yticks(i+1));
+                 if (lmk.meas.y(1) > sen.imGrid.xticks(i))...
+                        && (lmk.meas.y(2) > sen.imGrid.yticks(i))...
+                        && (lmk.meas.y(1) < sen.imGrid.xticks(i+1))...
+                        && (lmk.meas.y(2) < sen.imGrid.yticks(i+1));
                     
                     Sen(lmk.sen).imGrid.usedCell(i,j) = true;
-                    
+                    break;
                  end
             end
         end
