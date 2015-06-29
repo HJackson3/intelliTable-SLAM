@@ -77,14 +77,14 @@ if any(vis) % Consider only visible observations
         for i = 1:cells(1)
             for j = 1:cells(2)
             
-                % TO-DO here: Make it so the values of usedCell update back
-                % to zero at the correct time
+                % TO-DO here: Make it so the cells are made true correctly
+                % - ie. not just in row 1.
                 
                 % if within x coords of cell(i,j) AND within y coords of cell(i,j)
                  if (lmk.meas.y(1) > sen.imGrid.xticks(i))...
-                        && (lmk.meas.y(2) > sen.imGrid.yticks(i))...
+                        && (lmk.meas.y(2) > sen.imGrid.yticks(j))...
                         && (lmk.meas.y(1) < sen.imGrid.xticks(i+1))...
-                        && (lmk.meas.y(2) < sen.imGrid.yticks(i+1));
+                        && (lmk.meas.y(2) < sen.imGrid.yticks(j+1));
                     
                     Sen(lmk.sen).imGrid.usedCell(i,j) = true;
                     break;
