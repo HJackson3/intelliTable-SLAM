@@ -187,32 +187,32 @@ Sensor{1} = struct(...
 
 % Estimation options 
 Opt = struct(...
-  'map',                struct(...    % options for the map
-    'numLmks',          73,...         % number of 3d landmarks
-    'lmkSize',          6),...         % Size of landmark
-  'correct',            struct(...    % options for lmk correction
-    'reprojectLmks',    true,...       % reproject lmks after active search?
-    'reparametrize',    true,...       % reparametrize lmk?
-    'nUpdates',         10,...         % max simultaneus updates
-    'MD2th',            9,...          % Threshold on Mahalanobis distance squared
-    'linTestIdp',       0.1,...        % threshold on IDP linearity test
-    'lines',            struct(...     % options for line corrections
-      'innType',        'ortDst',...    % innovation type for lines
-      'extPolicy',      false,...       % line extending policy ?
-      'extSwitch',      10)),...        % extension policy switch point in pixels
-  'init',               struct(...    % Options for initialization
-    'nbrInits',         [5 1],...      % number of inits [firstFrame, otherFrames]
-    'initType',         'idpPnt',...   % Type of lmk to use for init
-    'idpPnt',           struct(...     % options for lmk initialization
-      'nonObsMean',     .01,...         % mean of non obs
-      'nonObsStd',      .5,...
-      'featQualityTh',  1),...         % std of non obs
-    'plkLin',           struct(...     % opt. for Plucker and anchored Plucker lines init
-      'nonObsMean',     [.1;0],...      % mean of non obs
-      'nonObsStd',      [.25;1])),...   % std of non obs
-  'obs',                struct(...    % Observation options
-    'lines',            struct(...     % lines options
-      'minLength',      20)));          % minimum segment length
+  'map',              struct(...    % options for the map
+    'numLmks',        73,...         % number of 3d landmarks
+    'lmkSize',        6),...         % Size of landmark
+  'correct',          struct(...    % options for lmk correction
+    'reprojectLmks',  true,...       % reproject lmks after active search?
+    'reparametrize',  true,...       % reparametrize lmk?
+    'nUpdates',       10,...         % max simultaneus updates
+    'MD2th',          9,...          % Threshold on Mahalanobis distance squared
+    'linTestIdp',     0.1,...        % threshold on IDP linearity test
+    'lines',          struct(...     % options for line corrections
+      'innType',      'ortDst',...    % innovation type for lines
+      'extPolicy',    false,...       % line extending policy ?
+      'extSwitch',    10)),...        % extension policy switch point in pixels
+  'init',             struct(...    % Options for initialization
+    'nbrInits',       [5 1],...      % number of inits [firstFrame, otherFrames]
+    'initType',       'idpPnt',...   % Type of lmk to use for init
+    'idpPnt',         struct(...     % options for lmk initialization
+      'nonObsMean',   .01,...         % mean of non obs
+      'nonObsStd',    .5,...
+      'featQuality),...         % std of non obs
+    'plkLin',         struct(...     % opt. for Plucker and anchored Plucker lines init
+      'nonObsMean',   [.1;0],...      % mean of non obs
+      'nonObsStd',    [.25;1])),...   % std of non obs
+  'obs',              struct(...    % Observation options
+    'lines',          struct(...     % lines options
+      'minLength',    20)));          % minimum segment length
         
 
 % Simulation options

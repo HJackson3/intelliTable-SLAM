@@ -1,4 +1,4 @@
-function [newId, app, meas, exp, inn] = detectFeat(lmkType, lmkIds, raw, pixCov, imSize)
+function [newId, app, meas, exp, inn] = detectFeat(lmkType, lmkIds, raw)
 
 % SIMDETECTFEAT  Detect a new feature in simulated raw data.
 %   [ID, M, E, I] = SIMDETECTFEAT(LTYPE, LIDS, RAW, PIXCOV, IMSIZE)
@@ -38,13 +38,7 @@ switch lmkType(4:6)
 
     case 'Pnt'
         
-        % make pix = harris_strongest (?) of the unoccupied grid cell
-        
-        [newId, meas, exp, inn] = detectPnt(lmkIds, raw, pixCov, imSize);
-        app    = newId;
-
-    case 'Lin'
-        [newId, meas, exp, inn] = simDetectLin(lmkIds, raw, pixCov);
+        [newId, meas, exp, inn] = detectPnt(lmkIds, raw);
         app    = newId;
         
     otherwise

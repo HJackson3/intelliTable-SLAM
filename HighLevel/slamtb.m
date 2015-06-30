@@ -80,32 +80,32 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
     % 1. SIMULATION
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    % Simulate robots
-    for rob = [SimRob.rob]
-
-        % Robot motion
-        SimRob(rob) = simMotion(SimRob(rob),Tim);
-        
-        % Simulate sensor observations
-        for sen = SimRob(rob).sensors
-               
-            % Observe simulated landmarks
-            Raw(sen) =  simObservation(SimRob(rob), SimSen(sen), SimLmk, SimOpt) ;
-
-        end % end process sensors
-
-    end % end process robots
-
-%     for sen = Sen(1) % Sensor is chosen
-%        
-%         % Raw data is camera feed
-%         Raw(1) = struct(...
-%             'type', 'image',...
-%             'data', struct(...
-%               'img', snapshot(cam))...
-%             );
+%     % Simulate robots
+%     for rob = [SimRob.rob]
+% 
+%         % Robot motion
+%         SimRob(rob) = simMotion(SimRob(rob),Tim);
 %         
-%     end % end of sensor
+%         % Simulate sensor observations
+%         for sen = SimRob(rob).sensors
+%                
+%             % Observe simulated landmarks
+%             Raw(sen) =  simObservation(SimRob(rob), SimSen(sen), SimLmk, SimOpt) ;
+% 
+%         end % end process sensors
+% 
+%     end % end process robots
+
+    for sen = Sen(1) % Sensor is chosen
+       
+        % Raw data is camera feed
+        Raw(1) = struct(...
+            'type', 'image',...
+            'data', struct(...
+              'img', snapshot(cam))...
+            );
+        
+    end % end of sensor
 
     
 

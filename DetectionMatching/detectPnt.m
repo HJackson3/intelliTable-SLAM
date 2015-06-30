@@ -1,4 +1,4 @@
-function [newId, meas, exp, inn] = detectPnt(lmkIds, raw, pixCov, imSize)
+function [newId, meas, exp, inn] = detectPnt(lmkIds, raw)
 
 %SIMDETECTPNT Detect 2D point in simulated Raw data.
 %   [Y,R,NEWID] = SIMDETECTPNT(LMKIDS,RAW,PIXCOV) return the coordinates Y,
@@ -9,40 +9,19 @@ function [newId, meas, exp, inn] = detectPnt(lmkIds, raw, pixCov, imSize)
 
 %   Copyright 2009 David Marquez @ LAAS-CNRS.
 
-apps  = raw.img;
+apps  = raw;
 
 [newIds,newIdsIdx] = setdiff(apps,lmkIds);
 
-% visPnts = inSquare(...
-%     raw.points.coord(:,newIdsIdx),   ...
-%     [0 imSize(1) 0 imSize(2)], ...
-%     imSize(1)/25);
-visPnts = 1;
+[pix, pixnoise] = harris_strongest(raw);
 
-newIds(~visPnts)    = [];
-newIdsIdx(~visPnts) = [];
-
-% if ~isempty(newIds)
-%     newId    = newIds(1);
-%     newIdx   = newIdsIdx(1);
-% 
-%     % best new point coordinates and covariance
-%     meas.y = pix;
-%     meas.R = pixCov;
-%     exp.e  = meas.y;
-%     exp.E  = meas.R;
-%     inn.z  = [0;0];
-%     inn.Z  = meas.R;
-% 
-% else
-
-    newId  = [];
-    meas.y = [];
-    meas.R = [];
-    exp.e  = [];
-    exp.E  = [];
-    inn.z  = [];
-    inn.Z  = [];
+% best new point coordinates and covariance
+meas.y = pix;
+meas.R = pixnoise^2*eye(2);
+exp.e  = meas.y;
+exp.E  = meas.R;
+inn.z  = [0;0];
+inn.Z  = meas.R;
 end
 
 
