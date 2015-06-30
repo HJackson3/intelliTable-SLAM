@@ -13,7 +13,7 @@ function [newId, meas, exp, inn] = detectPnt(lmkIds, raw, pixCov, hFeat)
 
 % best new point coordinates and covariance
 meas.y = pix;
-meas.R = pixCov^2*eye(2);
+meas.R = pi^2*eye(2); % What is pixnoise??
 exp.e  = meas.y;
 exp.E  = meas.R;
 inn.z  = [0;0];
@@ -23,11 +23,10 @@ inn.Z  = meas.R;
 if hFeat < pixnoise
     
     % Create app = 9x9-15x15 around pix
-    
-    % app = raw(pix(1)-4:pix(1)+4,pix(2)-4:pix(2)+4); - FIX THIS LATER
+    app = raw(pix(1)-4:pix(1)+4,pix(2)-4:pix(2)+4);
     
     % Create newId for lmk - A list of used lmkIds is given to us
-    newId = length(lmkIds)+1;
+    
     
 end
 end
