@@ -66,13 +66,8 @@ if any(vis) % Consider only visible observations
     
     for lmk = Obs(vis) % These are the visible landmarks
         
-        % landmark's location needed ( Obs(lmk).meas.y )
-        % compared to position on screen?
-        % then that cell set to true
-        
         sen = Sen(lmk.sen); % sensor for the image grid
         cells = sen.imGrid.numCells;
-        
         
         for i = 1:cells(1)
             for j = 1:cells(2)
