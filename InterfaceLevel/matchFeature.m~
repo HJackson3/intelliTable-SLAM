@@ -50,16 +50,30 @@ switch Raw.type
         centre = round(Obs.exp.e);                              % mean
         bounds = round(sqrt(diag(Obs.exp.E)));                  % ?3sigma in u and v direction.
         
-        % The search region for the feature
-        sRegion = pix2patch(Raw.data.img,centre,bounds(1),bounds(2));
+        imSize = Sen.imGrid.imSize;                             % size of the image
+        X = [centre - bounds, centre + bounds];                 % Region bounds - used for region extraction
+        while( any(X(:,1) < 1) || any(X(2,:) > imSize') )       % While the Rectangle is outside of the image.
+            if X(1,1) < 1
+                X(1,:) = X(1,:) + 1;
+                
+            elseif X(2,1) < 1
+                X(2,:) = X(1,:) + 1;
+                
+            elseif X(1,2) > imSize(1)
+                X(1,:) = X(1,:) - 1;
+                
+            elseif X(2,2) > imSize(2)
+                X(2,:) = X(1,:) - 1;
+            end
+           % need to change the region bounds to be within the image
+        end
+        
+        sRegion = Raw.data.img(...
+            X(1,:),...
+            X(2,:)); % rectangular search region
         
         %% Store the predicted appearance of the landmark in Obs.app.pred
-        % There are helper functions in the framework to do this - don't
-        % forget it again
-        Obs.app.pred = 0; % Will just use the Lmk for now - once I figure out how
-        
-        %% Scan the rectangular region for the modified patch using ZNCC
-        
+        Obs.app.pred = 
         % error('??? Feature matching for Raw data type ''%s'' not implemented yet.', Raw.type)
         
         

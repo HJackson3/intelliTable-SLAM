@@ -71,7 +71,7 @@ userData;           % user-defined data. SCRIPT.
 
 % Clear user data - not needed anymore
 clear Robot Sensor World Time   % clear all user data
-cam = webcam; % webcam for testing - will be replaced with Youbot camera
+% cam = webcam; % webcam for testing REMOVE
 
 
 %% IV. Main loop

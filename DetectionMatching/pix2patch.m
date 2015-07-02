@@ -29,8 +29,8 @@ if nargin < 4
 end
 
 % minimum necessary margins from central pixel to image edges
-h2 = (hsize-1)/2;
-v2 = (vsize-1)/2;
+h2 = round((hsize-1)/2);
+v2 = round((vsize-1)/2);
 
 pix0 = round(pix); % in case the given pixel is not integer
 

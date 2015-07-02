@@ -1,4 +1,4 @@
-function [newId, app, meas, exp, inn] = detectFeat(lmkType, lmkIds, raw, pixCov, hFeat)
+function [newId, app, meas, exp, inn] = detectFeat(lmkType, lmkIds, raw, pixCov, hFeat, pose)
 
 % SIMDETECTFEAT  Detect a new feature in simulated raw data.
 %   [ID, M, E, I] = SIMDETECTFEAT(LTYPE, LIDS, RAW, PIXCOV, IMSIZE)
@@ -38,8 +38,18 @@ switch lmkType(4:6)
 
     case 'Pnt'
         
-        [newId, meas, exp, inn] = detectPnt(lmkIds, raw, pixCov, hFeat);
-        app    = % Make this a 
+        [pixnoise, meas, exp, inn] = detectPnt(lmkIds, raw, pixCov);
+        % If harris point is above threshold
+        if hFeat < pixnoise
+    
+            % Create newId for lmk - A list of used lmkIds is given to us
+            newId = length(lmkIds)+1;
+            patch = pix2patch(); % This is a 9x9 to 15x15 patch around the selected pixel
+            app    = struct(...
+                'patch', patch,...
+                'pose0', pose);
+            
+        end
         
     otherwise
 
