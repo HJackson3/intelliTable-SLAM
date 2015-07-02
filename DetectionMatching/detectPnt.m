@@ -1,4 +1,4 @@
-function [newId, meas, exp, inn] = detectPnt(lmkIds, raw, pixCov, hFeat)
+function [pixnoise, meas, exp, inn] = detectPnt(lmkIds, raw, pixCov)
 
 %SIMDETECTPNT Detect 2D point in simulated Raw data.
 %   [Y,R,NEWID] = SIMDETECTPNT(LMKIDS,RAW,PIXCOV) return the coordinates Y,
@@ -19,17 +19,7 @@ exp.E  = meas.R;
 inn.z  = [0;0];
 inn.Z  = meas.R;
 
-% If harris point is above threshold
-if hFeat < pixnoise
-    
-    % Create app = 9x9-15x15 around pix
-    
-    % app = raw(pix(1)-4:pix(1)+4,pix(2)-4:pix(2)+4); - FIX THIS LATER
-    
-    % Create newId for lmk - A list of used lmkIds is given to us
-    newId = length(lmkIds)+1;
-    
-end
+
 end
 
 

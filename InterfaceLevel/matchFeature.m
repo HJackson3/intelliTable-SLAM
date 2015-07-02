@@ -51,19 +51,27 @@ switch Raw.type
         centre = round(Obs.exp.e);                              % mean
         bounds = round(sqrt(diag(Obs.exp.E)));                  % ?3sigma in u and v direction.
         
-        
-        % while loop(s) here to make sure none of the values in xSearch and
-        % ySearch are invalid
-        while(false) % While the Rectangle is outside of the image.
-           % need to change the value of centre in the right axis
-           % then recalculate bounds. 
+        imSize = Sen.imGrid.imSize;                             % size of the image
+        X = [centre - bounds, centre + bounds];                 % Region bounds - used for region extraction
+        while( any(X(:,1) < 1) || any(X(2,:) > imSize') )        % While the Rectangle is outside of the image.
+            if X(1,1) < 1
+                X(1,:) = X(1,:) + 1;
+                
+            elseif X(2,1) < 1
+                X(2,:) = X(1,:) + 1;
+                
+            elseif X(1,2) > imSize(1)
+                X(1,:) = X(1,:) - 1;
+                
+            elseif X(2,2) > imSize(2)
+                X(2,:) = X(1,:) - 1;
+            end
+           % need to change the region bounds to be within the image
         end
         
-        xSearch = (centre(1)-bounds(1)):(centre(1)+bounds);     % x,y for region
-        ySearch = (centre(2)-bounds(2)):(centre(2)+bounds(2));
-        
-        % sRegion = Raw.data.img(xSearch,...
-        %     ySearch); % rectangular search region
+        sRegion = Raw.data.img(...
+            X(1,:),...
+            X(2,:)); % rectangular search region
         
         % error('??? Feature matching for Raw data type ''%s'' not implemented yet.', Raw.type)
         

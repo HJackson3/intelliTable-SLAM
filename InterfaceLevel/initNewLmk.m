@@ -73,7 +73,7 @@ switch Raw.type
         % later. Designed to pick an unoccupied cell at random using a
         % randomised array
         [x, I] = max(rand(5).*~Sen.imGrid.usedCell);
-        [~, J] = max(x);        % because we want the 2D co-ordinates we need to run max() twice
+        [~, J] = max(x); % because we want the 2D co-ordinates we need to run max() twice
         best = [I(J),J]; % co-ordinates for the random unoccupied cell
         
         % extract the image of the cell
@@ -86,7 +86,8 @@ switch Raw.type
             [Lmk([Lmk.used]).id],       ...
             cellData,                   ...
             Sen.par.pixCov,             ...
-            Opt.init.featQualityTh);  
+            Opt.init.featQualityTh,     ...
+            Sen.frame.x);  
         
         % error('??? Raw type ''%s'' not yet implemented.', Raw.type);
         
