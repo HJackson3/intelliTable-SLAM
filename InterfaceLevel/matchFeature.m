@@ -1,4 +1,4 @@
-function Obs = matchFeature(Sen,Raw,Obs)
+function Obs = matchFeature(Sen,Raw,Obs,sig)
 
 % MATCHFEATURE  Match feature.
 % 	Obs = MATCHFEATURE(Sen,Raw,Obs) matches one feature in Raw to the predicted
@@ -56,9 +56,11 @@ switch Raw.type
         %% Store the predicted appearance of the landmark in Obs.app.pred
         % There are helper functions in the framework to do this - don't
         % forget it again
-        Obs.app.pred = 0; % Will just use the Lmk for now - once I figure out how
+        Obs.app.pred = sig; % Will just use the Lmk for now - once I figure out how
         
         %% Scan the rectangular region for the modified patch using ZNCC
+        pred = Obs.app.pred;
+        sc = zncc(sRegion.I,pred.I,sRegion.SI,pred.SI,sRegion.SII,pred.SII);
         
         % error('??? Feature matching for Raw data type ''%s'' not implemented yet.', Raw.type)
         
