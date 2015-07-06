@@ -44,29 +44,53 @@ switch Raw.type
         end
         
     case 'image'
-        %% Creating the rectangular search region, sRegion
-        % Rectangular search region centred around Obs.exp.e
-        % ?sqrt(diag(Obs.exp.E))
-        centre = round(Obs.exp.e);                              % mean
-        bounds = round(sqrt(diag(Obs.exp.E)));                  % ?3sigma in u and v direction.
+        %% Create variables for the rectangular search region, sRegion
+        %  Centre is mean (Obs.exp.e) with bounds 3 sigma (sqrt. of diag.
+        %  of Obs.exp.E).
         
-        % The search region for the feature
-        sRegion = pix2patch(Raw.data.img,centre,bounds(1),bounds(2));
+        centre = round(Obs.exp.e);                % mean
+        bounds = round(sqrt(diag(Obs.exp.E)));    % 3sigma in u and v direction.
         
-        %% Store the predicted appearance of the landmark in Obs.app.pred
-        % There are helper functions in the framework to do this - don't
-        % forget it again
-        Obs.app.pred = sig; % Will just use the Lmk for now - once I figure out how
+        sBounds = [centre-bounds,centre+bounds];  % The search region for the feature
+        if ~any(sBounds < 1)
+            %% Create sRegion if it's within the region, otherwise just ignore
+            % 
+            
+            sRegion = pix2patch(Raw.data.img,centre,2*bounds(1),2*bounds(2));
         
-        %% Scan the rectangular region for the modified patch using ZNCC
-        pred = Obs.app.pred;
-        sc = zncc(sRegion.I,pred.I,sRegion.SI,pred.SI,sRegion.SII,pred.SII);
+            %% Store the predicted appearance of the landmark in Obs.app.pred
+            %  Resize the appearance using a rotation and zoom factor to
+            %  predict appearance in new position.
+
+            % xDiff = abs(sig.pose0 - Sen.frame.x);            % Rotation and zoom factor
+            Obs.app.pred = sig.patch; % patchResize(sig.patch, zFactor);    % Predicted appeareance
+
+            %% Scan the rectangular region for the modified patch using ZNCC
+            pred = Obs.app.pred;
+
+            % This current implementation is incredibly slow - find a way to
+            % speed it up.
+            for i = 1:(sBounds(1,2)-sBounds(1,1)) % xBounds
+                for j = 1:(sBounds(2,2)-sBounds(2,1)) % yBounds
+                    rPatch = pix2patch(sRegion.I, [i;j], 9);
+                    sc = zncc(...
+                        rPatch.I,...
+                        pred.I,...
+                        rPatch.SI,...
+                        pred.SI,...
+                        rPatch.SII,...
+                        pred.SII);
+
+                end
+            end
+        end
+        %%
+        %% Error left in but commented out for possible future use.
         
         % error('??? Feature matching for Raw data type ''%s'' not implemented yet.', Raw.type)
         
         
     otherwise
-        
         error('??? Unknown Raw data type ''%s''.',Raw.type)
         
 end

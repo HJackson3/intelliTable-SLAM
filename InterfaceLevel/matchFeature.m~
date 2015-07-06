@@ -1,4 +1,4 @@
-function Obs = matchFeature(Sen,Raw,Obs)
+function Obs = matchFeature(Sen,Raw,Obs,sig)
 
 % MATCHFEATURE  Match feature.
 % 	Obs = MATCHFEATURE(Sen,Raw,Obs) matches one feature in Raw to the predicted
@@ -47,38 +47,42 @@ switch Raw.type
         %% Creating the rectangular search region, sRegion
         % Rectangular search region centred around Obs.exp.e
         % ?sqrt(diag(Obs.exp.E))
-        centre = round(Obs.exp.e);                              % mean
-        bounds = round(sqrt(diag(Obs.exp.E)));                  % ?3sigma in u and v direction.
+        centre = round(Obs.exp.e);                % mean
+        bounds = round(sqrt(diag(Obs.exp.E)));   % ?3sigma in u and v direction.
         
-        imSize = Sen.imGrid.imSize;                             % size of the image
-        X = [centre - bounds, centre + bounds];                 % Region bounds - used for region extraction
-        while( any(X(:,1) < 1) || any(X(2,:) > imSize') )       % While the Rectangle is outside of the image.
-            if X(1,1) < 1
-                X(1,:) = X(1,:) + 1;
-                
-            elseif X(2,1) < 1
-                X(2,:) = X(1,:) + 1;
-                
-            elseif X(1,2) > imSize(1)
-                X(1,:) = X(1,:) - 1;
-                
-            elseif X(2,2) > imSize(2)
-                X(2,:) = X(1,:) - 1;
-            end
-           % need to change the region bounds to be within the image
-        end
+        sRegion = [centre-bounds,centre+bounds]; % The search region for the feature
         
-        sRegion = Raw.data.img(...
-            X(1,:),...
-            X(2,:)); % rectangular search region
         
         %% Store the predicted appearance of the landmark in Obs.app.pred
-        Obs.app.pred = 
+        %  
+        
+        fact = abs(sig.pose0 - Sen.frame.x);            % Rotation and zoom factor
+        Obs.app.pred = patchresize(sig.patch, fact);    % Predicted appeareance
+        
+        %% Scan the rectangular region for the modified patch using ZNCC
+        pred = Obs.app.pred;
+
+        % This current implementation is incredibly slow - find a way to
+        % speed it up.
+        for i = linspace(sRegion(1,1),sRegion(1,2)) % xBounds
+            for j = linspace(sRegion(2,1),sRegion(2,2)) % yBounds
+                rPatch = pix2patch(Raw.data.img,centre,9);
+                sc = zncc(...
+                    rPatch.I,...
+                    pred.I,...
+                    rPatch.SI,...
+                    pred.SI,...
+                    rPatch.SII,...
+                    pred.SII);
+
+            end
+        end
+        %%
+        %%
         % error('??? Feature matching for Raw data type ''%s'' not implemented yet.', Raw.type)
         
         
     otherwise
-        
         error('??? Unknown Raw data type ''%s''.',Raw.type)
         
 end
