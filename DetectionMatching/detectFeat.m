@@ -1,4 +1,4 @@
-function [newId, app, meas, exp, inn] = detectFeat(lmkType, lmkIds, raw, pixCov, hFeat, pose)
+function [newId, app, meas, exp, inn] = detectFeat(lmkType, lmkIds, raw, coords, pixCov, hFeat, pose)
 
 % SIMDETECTFEAT  Detect a new feature in simulated raw data.
 %   [ID, M, E, I] = SIMDETECTFEAT(LTYPE, LIDS, RAW, PIXCOV, IMSIZE)
@@ -38,7 +38,7 @@ switch lmkType(4:6)
 
     case 'Pnt'
         
-        [pixnoise, meas, exp, inn] = detectPnt(lmkIds, raw, pixCov);
+        [pixnoise, meas, exp, inn] = detectPnt(lmkIds, raw, coords, pixCov);
         % If harris point is above threshold
         if hFeat < pixnoise
     

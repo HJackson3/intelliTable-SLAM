@@ -1,4 +1,4 @@
-function [pixnoise, meas, exp, inn] = detectPnt(lmkIds, raw, pixCov)
+function [pixnoise, meas, exp, inn] = detectPnt(lmkIds, raw, coords, pixCov)
 
 %SIMDETECTPNT Detect 2D point in simulated Raw data.
 %   [Y,R,NEWID] = SIMDETECTPNT(LMKIDS,RAW,PIXCOV) return the coordinates Y,
@@ -12,7 +12,7 @@ function [pixnoise, meas, exp, inn] = detectPnt(lmkIds, raw, pixCov)
 [pix, pixnoise] = harris_strongest(raw);
 
 % best new point coordinates and covariance
-meas.y = pix;
+meas.y = pix + coords;
 meas.R = pixCov^2*eye(2);
 exp.e  = meas.y;
 exp.E  = meas.R;
