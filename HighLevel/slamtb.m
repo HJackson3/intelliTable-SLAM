@@ -121,8 +121,8 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
         % is noised so that the simulated trajectory can be made perfect
         % and act as a clear reference. The noise is additive to the
         % control input 'u'.
-        Rob(rob).con.u = SimRob(rob).con.u + Rob(rob).con.uStd.*randn(size(Rob(rob).con.uStd));
-        Rob(rob) = motion(Rob(rob),Tim);
+        % Rob(rob).con.u = SimRob(rob).con.u + Rob(rob).con.uStd.*randn(size(Rob(rob).con.uStd));
+        % Rob(rob) = motion(Rob(rob),Tim);
         
         Map.t = Map.t + Tim.dt;
                 

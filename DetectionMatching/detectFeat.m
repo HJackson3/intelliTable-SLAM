@@ -44,11 +44,14 @@ switch lmkType(4:6)
     
             % Create newId for lmk - A list of used lmkIds is given to us
             newId = length(lmkIds)+1;
-            patch = pix2patch(raw,meas.y,9); % This is a 9x9 to 15x15 patch around the selected pixel
+            patch = pix2patch(raw,meas.y,15); % This is a 9x9 to 15x15 patch around the selected pixel
             app    = struct(...
                 'patch', patch,...
                 'pose0', pose);
-            
+        else
+            newId = 0;      % Setting values to empty so we know 
+            meas.y = [];    % that no adequate features were found.
+            app = [];
         end
         
     otherwise

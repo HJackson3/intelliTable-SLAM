@@ -1,4 +1,4 @@
-function Obs = matchFeature(Sen,Raw,Obs,sig)
+function Obs = matchFeature(Sen,Raw,Obs,sig,scTh)
 
 % MATCHFEATURE  Match feature.
 % 	Obs = MATCHFEATURE(Sen,Raw,Obs) matches one feature in Raw to the predicted
@@ -68,23 +68,43 @@ switch Raw.type
             %% Scan the rectangular region for the modified patch using ZNCC
             pred = Obs.app.pred;
 
-            % This current implementation is incredibly slow - find a way to
+            % This current implementation is quite slow - find a way to
             % speed it up.
+            
+            % Scans the region to find the patch that best fits
+            Obs.app.sc = 0;
             for i = 1:(sBounds(1,2)-sBounds(1,1)) % xBounds
                 for j = 1:(sBounds(2,2)-sBounds(2,1)) % yBounds
-                    rPatch = pix2patch(sRegion.I, [i;j], 9);
-                    sc = zncc(...
+                    rPatch = pix2patch(sRegion.I, [i;j], 15);
+                    tmpSc = zncc(...
                         rPatch.I,...
                         pred.I,...
                         rPatch.SI,...
                         pred.SI,...
                         rPatch.SII,...
                         pred.SII);
-
+                    
+                    % If the score is the current highest then update the
+                    % values
+                    if tmpSc > Obs.app.sc
+                        Obs.app.sc      = tmpSc;    % Setting score and current appearance
+                        Obs.app.curr    = rPatch;   % for the patch
+                        
+                        x = sBounds(1,1)+i;
+                        y = sBounds(2,1)+j;
+                        Obs.meas.y      = [x;y];    % Store best pixel
+                        Obs.measured    = true;
+                    end
                 end
             end
+            
+            %% Test if the zncc score is above the threshold
+            %  If so, set Obs.matched to true.
+            if Obs.app.sc > scTh
+            	Obs.matched = true; 
+            end
+            
         end
-        %%
         %% Error left in but commented out for possible future use.
         
         % error('??? Feature matching for Raw data type ''%s'' not implemented yet.', Raw.type)

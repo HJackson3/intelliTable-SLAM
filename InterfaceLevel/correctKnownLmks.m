@@ -71,9 +71,6 @@ if any(vis) % Consider only visible observations
         
         for i = 1:cells(1)
             for j = 1:cells(2)
-            
-                % TO-DO here: Make it so the cells are made true correctly
-                % - ie. not just in row 1.
                 
                 % if within x coords of cell(i,j) AND within y coords of cell(i,j)
                  if (lmk.meas.y(1) > sen.imGrid.xticks(i))...
@@ -103,7 +100,7 @@ if any(vis) % Consider only visible observations
         Lmk(lmk).nSearch = Lmk(lmk).nSearch + 1;
 
         % 3. TRY TO MATCH FEATURE
-        Obs(lmk) = matchFeature(Sen,Raw,Obs(lmk),Lmk(lmk).sig);
+        Obs(lmk) = matchFeature(Sen,Raw,Obs(lmk),Lmk(lmk).sig, Opt.correct.appScTh);
 
         if Obs(lmk).matched
 
@@ -134,7 +131,7 @@ if any(vis) % Consider only visible observations
                     Sen,      ...
                     Lmk(lmk), ...
                     Obs(lmk), ...
-                    Opt          );
+                    Opt);
                 
             else % obs is inconsistent - do not update
 

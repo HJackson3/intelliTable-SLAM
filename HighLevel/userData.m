@@ -199,7 +199,8 @@ Opt = struct(...
     'lines',            struct(...      % options for line corrections
       'innType',        'ortDst',...    % innovation type for lines
       'extPolicy',      false,...       % line extending policy ?
-      'extSwitch',      10)),...        % extension policy switch point in pixels
+      'extSwitch',      10),...         % extension policy switch point in pixels
+    'appScTh',          .95),...       % Appearance score threshold for the zncc
   'init',               struct(...      % Options for initialization
     'nbrInits',         [5 1],...       % number of inits [firstFrame, otherFrames]
     'initType',         'idpPnt',...    % Type of lmk to use for init
@@ -209,7 +210,7 @@ Opt = struct(...
     'plkLin',           struct(...      % opt. for Plucker and anchored Plucker lines init
       'nonObsMean',     [.1;0],...      % mean of non obs
       'nonObsStd',      [.25;1]),...    % std of non obs
-    'featQualityTh',  1),...   
+    'featQualityTh',    500),...        % Feature quality threshold for harris point
   'obs',                struct(...    % Observation options
     'lines',            struct(...     % lines options
       'minLength',      20)));          % minimum segment length
