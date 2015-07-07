@@ -38,7 +38,7 @@ Time = struct(...
 % Simulated world
 %   - Simulation landmark sets, playground dimensions
 World = struct(...
-  'points',           thickCloister(-6,6,-6,6,1,7),... % 3d point landmarks - see THICKCLOISTER. 
+  'points',           [],... % 3d point landmarks - see THICKCLOISTER. 
   'segments',         []);  % 3D segments - see HOUSE. 
     
 % Robot things with their controls
@@ -53,7 +53,7 @@ Robot{1} = struct(...                  % ODOMETRY EXAMPLE
   'name',               'Dala',...      % robot name
   'type',               'atrv',...      % type of robot
   'motion',             'odometry',...  % motion model
-  'position',           [0;-5;0],...     % robot position in map
+  'position',           [0;0;0],...     % robot position in map
   'orientationDegrees', [0;0;0],...     % orientation, in degrees, [roll; pitch; yaw].
   'positionStd',        [0;0;0],...     % position error, std
   'orientationStd',     [0;0;0],...     % orient. error, std, in degrees
