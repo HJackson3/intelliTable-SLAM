@@ -48,6 +48,9 @@ switch Rob.motion
         
         % Covariances matrix update
         predictBlockEkf(r, F_x, Rob.con.U, F_u);
+        
+    case {'input'} % User-based input for real robot
+        %% The Youbot's motion is updated using userCommand and the changes used here for SLAM.
                 
     otherwise
         
