@@ -1,0 +1,28 @@
+\documentclass[11pt]{amsart}
+\usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+\geometry{a4paper}                   % ... or a4paper or a5paper or ... 
+%\geometry{landscape}                % Activate for for rotated page geometry
+\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\usepackage{cite}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\title{EKFmonoSLAM for the IntelliTable robot}
+\author{Harry Jackson}
+%\date{}                                           % Activate to display a given date or no date
+
+\begin{document}
+\maketitle
+\section{Introduction}
+The EKFmonoSLAM uses a EKF SLAM algorithm originally designed by Joan Sola ~\cite{sola2012impact}
+\section{Quick Setup}
+
+
+%\subsection{}
+
+
+\bibliography{myBib}{}
+\bibliographystyle{plain}
+\end{document}  

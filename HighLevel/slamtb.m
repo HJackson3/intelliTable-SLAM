@@ -71,7 +71,7 @@ userData;           % user-defined data. SCRIPT.
 
 % Clear user data - not needed anymore
 clear Robot Sensor World Time   % clear all user data
-cam = webcam; % webcam for testing - will be replaced with Youbot camera
+cam = ipcam('http://172.30.56.42:8080/?action=stream'); % Youbot webcam
 
 
 %% IV. Main loop
@@ -122,12 +122,18 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
         % and act as a clear reference. The noise is additive to the
         % control input 'u'.
         % Rob(rob).con.u = SimRob(rob).con.u + Rob(rob).con.uStd.*randn(size(Rob(rob).con.uStd));
-        % Rob(rob) = motion(Rob(rob),Tim);
+        Rob(rob) = motion(Rob(rob),Tim);
+        
+        % Youbot motion
+        % Changes the course of the Youbot if the simRob's vel changes
+        v = Rob(rob).state.x;
+        if Rob(rob).state.oldV ~= v(8:13)
+            disp('move')
+            Rob(rob) = userCommand(Rob(rob));
+        end
         
         Map.t = Map.t + Tim.dt;
-                
-
-
+        
         % Process sensor observations
         for sen = Rob(rob).sensors
 

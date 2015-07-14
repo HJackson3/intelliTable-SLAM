@@ -18,6 +18,7 @@ for rob = 1:numel(Robot)
     Ro.name    = Ri.name;
     Ro.type    = Ri.type;
     Ro.motion  = Ri.motion;
+    % Ro.youbot  = Ri.youbot;
     
     Ro.sensors = [];
     
@@ -42,6 +43,7 @@ for rob = 1:numel(Robot)
             
             % state
             Ro.state.x    = [qp;v]; % state
+            Ro.state.oldV = zeros(numel(v),1);
             Ro.state.P    = blkdiag(QP,V);
             
         case {'odometry'}
@@ -57,6 +59,8 @@ for rob = 1:numel(Robot)
         otherwise
             error('Unknown motion model ''%s'' for robot %d.',Robot{rob}.motion,Robot{rob}.id);
     end
+    
+    % Put a switch statement here for the type of camera
     
     Ro.state.size = numel(Ro.state.x);   % state size
     Ro.state.r  = [];
