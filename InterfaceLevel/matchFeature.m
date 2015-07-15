@@ -1,4 +1,4 @@
-function Obs = matchFeature(Sen,Raw,Obs,sig,scTh)
+https://www.facebook.com/TheOriginalBestOfTumblr/photos/a.252727674878437.1073741825.252714998213038/675976742553526/?type=1&theaterfunction Obs = matchFeature(Sen,Raw,Obs,sig,scTh)
 
 % MATCHFEATURE  Match feature.
 % 	Obs = MATCHFEATURE(Sen,Raw,Obs) matches one feature in Raw to the predicted
@@ -63,7 +63,7 @@ switch Raw.type
             %  predict appearance in new position.
 
             % xDiff = abs(sig.pose0 - Sen.frame.x);            % Rotation and zoom factor
-            Obs.app.pred = sig.patch; % patchResize(sig.patch, zFactor);    % Predicted appeareance
+            Obs.app.pred = sig.patch; % patchResize(sig.patch, xDiff);    % Predicted appeareance
 
             %% Scan the rectangular region for the modified patch using ZNCC
             pred = Obs.app.pred;
@@ -83,6 +83,7 @@ switch Raw.type
                         pred.SI,...
                         rPatch.SII,...
                         pred.SII);
+                    disp(tmpSc)
                     
                     % If the score is the current highest then update the
                     % values

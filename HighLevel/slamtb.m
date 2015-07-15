@@ -127,7 +127,7 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
         % Youbot motion
         % Changes the course of the Youbot if the simRob's vel changes
         v = Rob(rob).state.x;
-        if Rob(rob).state.oldV ~= v(8:13)
+        if any(Rob(rob).state.oldV ~= v(8:13))
             disp('move')
             Rob(rob) = userCommand(Rob(rob));
         end

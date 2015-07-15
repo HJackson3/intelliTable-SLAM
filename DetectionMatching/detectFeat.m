@@ -1,4 +1,4 @@
-function [newId, app, meas, exp, inn] = detectFeat(lmkType, lmkIds, raw, coords, pixCov, hFeat, pose)
+function [newId, app, meas, exp, inn] = detectFeat(lmkType, lmkIds, rawB, raw, cell, coords, pixCov, hFeat, pose)
 
 % SIMDETECTFEAT  Detect a new feature in simulated raw data.
 %   [ID, M, E, I] = SIMDETECTFEAT(LTYPE, LIDS, RAW, PIXCOV, IMSIZE)
@@ -44,7 +44,7 @@ switch lmkType(4:6)
     
             % Create newId for lmk - A list of used lmkIds is given to us
             newId = length(lmkIds)+1;
-            patch = pix2patch(raw,meas.y,15); % This is a 9x9 to 15x15 patch around the selected pixel
+            patch = pix2patch(rawB,cell+meas.y,15); % This is a 9x9 to 15x15 patch around the selected pixel
             app    = struct(...
                 'patch', patch,...
                 'pose0', pose);

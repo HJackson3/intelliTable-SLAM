@@ -18,7 +18,7 @@ for rob = 1:numel(Robot)
     Ro.name    = Ri.name;
     Ro.type    = Ri.type;
     Ro.motion  = Ri.motion;
-    % Ro.youbot  = Ri.youbot;
+    Ro.youbot  = Ri.youbot;
     
     Ro.sensors = [];
     
@@ -61,6 +61,9 @@ for rob = 1:numel(Robot)
     end
     
     % Put a switch statement here for the type of camera
+    
+    % Set up Youbot (arm position etc.)
+    Ro.youbot.ArmPosition([pi,pi/8,0,0,pi*1.4]);
     
     Ro.state.size = numel(Ro.state.x);   % state size
     Ro.state.r  = [];

@@ -85,16 +85,16 @@ Robot{1} = struct(...                      % CONSTANT VELOCITY EXAMPLE
   'orientationDegrees', [0;0;0],...             % orientation, in degrees, [roll; pitch; yaw].
   'positionStd',        [0;0;0],...             % position error, std
   'orientationStd',     [0;0;0],...             % orient. error, std, degrees
-  'velocity',           [.1;0;0],...            % lin. velocity
+  'velocity',           [0;0;0],...             % lin. velocity
   'angularVelDegrees',  [0;0;10],...            % ang. velocity, in degrees
   'velStd',             [0;0;0],...             % lin. vel. error, std
   'angVelStd',          [0;0;0],...             % ang. vel. error, std, degrees
   'dv',                 [0;0;0],...             % velocity increment
   'dwDegrees',          [0;0;0],...             % ang. vel. increment, degrees
   'dvStd',              [0;0;0],...             % vel perturbation std
-  'dwStd',              [0;0;1],...             % ang vel pert. std, degrees
+  'dwStd',              [0;0;0],...             % ang vel pert. std, degrees
   'youbot',             Youbot('youbot2'),...   % youbot used
-  'camera',             'webcam');              % Type of camera - none, webcam or robot
+  'camera',             'robot');              % Type of camera - none, webcam or robot
 
 
 % Sensor things 
@@ -107,8 +107,8 @@ Sensor{1} = struct(...
   'name',               'Micropix',...              % sensor name
   'type',               'pinHole',...               % type of sensor
   'robot',              1,...                       % robot where it is mounted
-  'position',           [0;0;.6],...                % position in robot
-  'orientationDegrees', [-90;0;-90],...             % orientation in robot, [roll; pitch; yaw]
+  'position',           [.2;0;.4],...                % position in robot
+  'orientationDegrees', [0;0;0],...                 % orientation in robot, [roll; pitch; yaw]
   'positionStd',        [0;0;0],...                 % position error std
   'orientationStd',     [0;0;0],...                 % orient. error std
   'imageSize',          [640;480],...               % image size

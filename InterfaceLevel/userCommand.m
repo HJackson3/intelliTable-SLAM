@@ -15,6 +15,6 @@ angVel = Rob.state.x(13);
 Rob.youbot.BaseVelocity(vel(1),vel(2),angVel);
 
 %% Set the old Velocity to the current
-Rob.state.oldVel = Rob.state.x(8:13);
+Rob.state.oldV = Rob.state.x(8:13);
 
 end

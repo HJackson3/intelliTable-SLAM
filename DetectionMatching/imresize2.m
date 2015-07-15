@@ -12,7 +12,7 @@ function out_im = imresize2(im,H)
 %   function as-is, extend the size of I with zeros on all 4 borders to the
 %   size required by IO.
 %
-%   NOTE2: at this time, only zomming in is supported. If R<1 the output
+%   NOTE2: at this time, only zooming in is supported. If R<1 the output
 %   image will be the same as the input one.
 
 %   (c) Joan Sola 2008
