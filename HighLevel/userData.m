@@ -86,14 +86,14 @@ Robot{1} = struct(...                      % CONSTANT VELOCITY EXAMPLE
   'positionStd',        [0;0;0],...             % position error, std
   'orientationStd',     [0;0;0],...             % orient. error, std, degrees
   'velocity',           [0;0;0],...             % lin. velocity
-  'angularVelDegrees',  [0;0;10],...            % ang. velocity, in degrees
+  'angularVelDegrees',  [0;0;0],...             % ang. velocity, in degrees
   'velStd',             [0;0;0],...             % lin. vel. error, std
   'angVelStd',          [0;0;0],...             % ang. vel. error, std, degrees
   'dv',                 [0;0;0],...             % velocity increment
   'dwDegrees',          [0;0;0],...             % ang. vel. increment, degrees
   'dvStd',              [0;0;0],...             % vel perturbation std
   'dwStd',              [0;0;0],...             % ang vel pert. std, degrees
-  'youbot',             Youbot('youbot2'),...   % youbot used
+  ...%'youbot',             Youbot('youbot2'),...   % youbot used
   'camera',             'robot');              % Type of camera - none, webcam or robot
 
 
@@ -201,7 +201,7 @@ Opt = struct(...
       'innType',        'ortDst',...    % innovation type for lines
       'extPolicy',      false,...       % line extending policy ?
       'extSwitch',      10),...         % extension policy switch point in pixels
-    'appScTh',          .95),...       % Appearance score threshold for the zncc
+    'appScTh',          .5),...       % Appearance score threshold for the zncc
   'init',               struct(...      % Options for initialization
     'nbrInits',         [5 1],...       % number of inits [firstFrame, otherFrames]
     'initType',         'idpPnt',...    % Type of lmk to use for init

@@ -1,4 +1,4 @@
-https://www.facebook.com/TheOriginalBestOfTumblr/photos/a.252727674878437.1073741825.252714998213038/675976742553526/?type=1&theaterfunction Obs = matchFeature(Sen,Raw,Obs,sig,scTh)
+function Obs = matchFeature(Sen,Raw,Obs,sig,scTh)
 
 % MATCHFEATURE  Match feature.
 % 	Obs = MATCHFEATURE(Sen,Raw,Obs) matches one feature in Raw to the predicted
@@ -75,7 +75,8 @@ switch Raw.type
             Obs.app.sc = 0;
             for i = 1:(sBounds(1,2)-sBounds(1,1)) % xBounds
                 for j = 1:(sBounds(2,2)-sBounds(2,1)) % yBounds
-                    rPatch = pix2patch(sRegion.I, [i;j], 15);
+                    c = [j;i]+centre-1;
+                    rPatch = pix2patch(Raw.data.img, c, 15);
                     tmpSc = zncc(...
                         rPatch.I,...
                         pred.I,...
@@ -83,7 +84,7 @@ switch Raw.type
                         pred.SI,...
                         rPatch.SII,...
                         pred.SII);
-                    disp(tmpSc)
+                    disp([tmpSc, rPatch.SI, pred.SI])
                     
                     % If the score is the current highest then update the
                     % values
@@ -91,9 +92,7 @@ switch Raw.type
                         Obs.app.sc      = tmpSc;    % Setting score and current appearance
                         Obs.app.curr    = rPatch;   % for the patch
                         
-                        x = sBounds(1,1)+i;
-                        y = sBounds(2,1)+j;
-                        Obs.meas.y      = [x;y];    % Store best pixel
+                        Obs.meas.y      = c;    % Store best pixel
                         Obs.measured    = true;
                     end
                 end

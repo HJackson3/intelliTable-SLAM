@@ -71,7 +71,7 @@ userData;           % user-defined data. SCRIPT.
 
 % Clear user data - not needed anymore
 clear Robot Sensor World Time   % clear all user data
-cam = ipcam('http://172.30.56.42:8080/?action=stream'); % Youbot webcam
+cam = webcam;% ipcam('http://172.30.56.42:8080/?action=stream'); % Youbot webcam
 
 
 %% IV. Main loop
@@ -126,11 +126,11 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
         
         % Youbot motion
         % Changes the course of the Youbot if the simRob's vel changes
-        v = Rob(rob).state.x;
-        if any(Rob(rob).state.oldV ~= v(8:13))
-            disp('move')
-            Rob(rob) = userCommand(Rob(rob));
-        end
+%         v = Rob(rob).state.x;
+%         if any(Rob(rob).state.oldV ~= v(8:13))
+%             disp('move')
+%             Rob(rob) = userCommand(Rob(rob));
+%         end
         
         Map.t = Map.t + Tim.dt;
         
