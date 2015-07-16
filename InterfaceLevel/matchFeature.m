@@ -56,7 +56,7 @@ switch Raw.type
             %% Create sRegion if it's within the region, otherwise just ignore
             % 
             
-            sRegion = pix2patch(Raw.data.img,centre,2*bounds(1),2*bounds(2));
+            % sRegion = pix2patch(Raw.data.img,centre,2*bounds(1),2*bounds(2));
         
             %% Store the predicted appearance of the landmark in Obs.app.pred
             %  Resize the appearance using a rotation and zoom factor to
@@ -75,7 +75,8 @@ switch Raw.type
             Obs.app.sc = 0;
             for i = 1:(sBounds(1,2)-sBounds(1,1)) % xBounds
                 for j = 1:(sBounds(2,2)-sBounds(2,1)) % yBounds
-                    c = [j;i]+centre-1;
+                    % nCentre = [centre(2);centre(1)];
+                    c = [i;j]+centre-1;
                     rPatch = pix2patch(Raw.data.img, c, 15);
                     tmpSc = zncc(...
                         rPatch.I,...
@@ -84,7 +85,7 @@ switch Raw.type
                         pred.SI,...
                         rPatch.SII,...
                         pred.SII);
-                    disp([tmpSc, rPatch.SI, pred.SI])
+                    disp(tmpSc)%, rPatch.SI, pred.SI])
                     
                     % If the score is the current highest then update the
                     % values
@@ -102,6 +103,7 @@ switch Raw.type
             %  If so, set Obs.matched to true.
             if Obs.app.sc > scTh
             	Obs.matched = true; 
+                disp('matched')
             end
             
         end

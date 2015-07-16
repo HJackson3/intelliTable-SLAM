@@ -101,7 +101,7 @@ if any(vis) % Consider only visible observations
 
         % 3. TRY TO MATCH FEATURE
         Obs(lmk) = matchFeature(Sen,Raw,Obs(lmk),Lmk(lmk).sig, Opt.correct.appScTh);
-
+        
         if Obs(lmk).matched
 
             % Update Lmk matched counter
@@ -134,8 +134,7 @@ if any(vis) % Consider only visible observations
                     Opt);
                 
             else % obs is inconsistent - do not update
-
-                Obs(lmk).updated = false;
+               Obs(lmk).updated = false;
 
             end % if consistent
 

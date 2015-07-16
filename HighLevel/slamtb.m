@@ -71,7 +71,7 @@ userData;           % user-defined data. SCRIPT.
 
 % Clear user data - not needed anymore
 clear Robot Sensor World Time   % clear all user data
-cam = webcam;% ipcam('http://172.30.56.42:8080/?action=stream'); % Youbot webcam
+cam = ipcam('http://172.30.56.42:8080/?action=stream'); % Youbot webcam
 
 
 %% IV. Main loop
@@ -80,11 +80,11 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
     % 1. SIMULATION
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%     % Simulate robots
-%     for rob = [SimRob.rob]
-% 
-%         % Robot motion
-%         SimRob(rob) = simMotion(SimRob(rob),Tim);
+    % Simulate robots
+    for rob = [SimRob.rob]
+
+        % Robot motion
+        SimRob(rob) = simMotion(SimRob(rob),Tim);
 %         
 %         % Simulate sensor observations
 %         for sen = SimRob(rob).sensors
@@ -96,18 +96,18 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
 % 
 %     end % end process robots
 
-    for sen = Sen(1) % Sensor is chosen
-       
-        % Raw data is camera feed
-        Raw(1) = struct(...
-            'type', 'image',...
-            'data', struct(...
-              'img', snapshot(cam))...
-            );
-        
-    end % end of sensor
+        for sen = Sen(1) % Sensor is chosen
 
-    
+            % Raw data is camera feed
+            Raw(1) = struct(...
+                'type', 'image',...
+                'data', struct(...
+                  'img', rot90(snapshot(cam)))...
+                );
+
+        end % end of sensor
+
+    end    
 
     % 2. ESTIMATION
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -126,11 +126,11 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
         
         % Youbot motion
         % Changes the course of the Youbot if the simRob's vel changes
-%         v = Rob(rob).state.x;
-%         if any(Rob(rob).state.oldV ~= v(8:13))
-%             disp('move')
-%             Rob(rob) = userCommand(Rob(rob));
-%         end
+        v = Rob(rob).state.x;
+        if any(Rob(rob).state.oldV ~= v(8:13))
+            disp('move')
+            Rob(rob) = userCommand(Rob(rob));
+        end
         
         Map.t = Map.t + Tim.dt;
         
@@ -146,6 +146,8 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
                 Obs(sen,:), ...
                 Opt) ;
 
+            disp([Obs(sen,1).meas.y;Obs(sen,1).exp.e])
+            
             % Initialize new landmarks
             ninits = Opt.init.nbrInits(1 + (currentFrame ~= Tim.firstFrame));
             for i = 1:ninits
@@ -161,7 +163,6 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
         end % end process sensors
 
     end % end process robots
-
 
     % 3. VISUALIZATION
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
