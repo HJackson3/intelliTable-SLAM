@@ -146,7 +146,7 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
                 Obs(sen,:), ...
                 Opt) ;
 
-            disp([Obs(sen,1).meas.y;Obs(sen,1).exp.e])
+            % disp([Obs(sen,1).meas.y;Obs(sen,1).exp.e])
             
             % Initialize new landmarks
             ninits = Opt.init.nbrInits(1 + (currentFrame ~= Tim.firstFrame));

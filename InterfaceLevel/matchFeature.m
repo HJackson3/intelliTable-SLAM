@@ -68,16 +68,27 @@ switch Raw.type
             %% Scan the rectangular region for the modified patch using ZNCC
             pred = Obs.app.pred;
 
+            % Debugging: image of pred to compare with what we know about
+            % where the feature should be.
+            % figure(3)
+            % imshow(pred.I);
+            
             % This current implementation is quite slow - find a way to
             % speed it up.
             
             % Scans the region to find the patch that best fits
-            Obs.app.sc = 0;
+            Obs.app.sc = -1;
+            
             for i = 1:(sBounds(1,2)-sBounds(1,1)) % xBounds
                 for j = 1:(sBounds(2,2)-sBounds(2,1)) % yBounds
                     % nCentre = [centre(2);centre(1)];
                     c = [i;j]+centre-1;
                     rPatch = pix2patch(Raw.data.img, c, 15);
+                    
+                    % Debugging: rPatch
+                    % figure(4)
+                    % imshow(rPatch.I)
+                    
                     tmpSc = zncc(...
                         rPatch.I,...
                         pred.I,...
@@ -104,6 +115,17 @@ switch Raw.type
             if Obs.app.sc > scTh
             	Obs.matched = true; 
                 disp('matched')
+%             else
+%                 disp('Resulting failure')
+%                 disp(Obs.app.sc)
+%                 sprintf('rPatch \t pred');
+%                 disp([rPatch.SI pred.SI])
+%                 figure(3)
+%                 imshow(rPatch.I)
+%                 figure(4)
+%                 imshow(pred.I)
+%                 close(3)
+%                 close(4)
             end
             
         end
