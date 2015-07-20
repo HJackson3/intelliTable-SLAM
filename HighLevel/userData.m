@@ -31,8 +31,8 @@
 % Time variables 
 %   - sampling time, first and last frames
 Time = struct(...
-  'dt',                   .5,...          % sampling time, seconds
-  'firstFrame',           1,...           % first frame #
+  'dt',                   .1,...          % sampling time, seconds
+  'firstFrame',           80,...           % first frame #
   'lastFrame',            800);           % last frame #
 
 % Simulated world
@@ -85,7 +85,7 @@ Robot{1} = struct(...                      % CONSTANT VELOCITY EXAMPLE
   'orientationDegrees', [0;0;0],...             % orientation, in degrees, [roll; pitch; yaw].
   'positionStd',        [0;0;0],...             % position error, std
   'orientationStd',     [0;0;0],...             % orient. error, std, degrees
-  'velocity',           [0.05;0;0],...          % lin. velocity
+  'velocity',           [0.01;0;0],...          % lin. velocity
   'angularVelDegrees',  [0;0;0],...             % ang. velocity, in degrees
   'velStd',             [0;0;0],...             % lin. vel. error, std
   'angVelStd',          [0;0;0],...             % ang. vel. error, std, degrees
@@ -93,7 +93,7 @@ Robot{1} = struct(...                      % CONSTANT VELOCITY EXAMPLE
   'dwDegrees',          [0;0;0],...             % ang. vel. increment, degrees
   'dvStd',              [0;0;0],...             % vel perturbation std
   'dwStd',              [0;0;0],...             % ang vel pert. std, degrees
-  'youbot',             Youbot('youbot2'),...   % youbot used
+  ...%'youbot',             Youbot('youbot2'),...   % youbot used
   'camera',             'robot');               % Type of camera - none, webcam or robot
 
 
@@ -108,11 +108,11 @@ Sensor{1} = struct(...
   'type',               'pinHole',...               % type of sensor
   'robot',              1,...                       % robot where it is mounted
   'position',           [.2;0;.4],...                % position in robot
-  'orientationDegrees', [-90;0;90],...                 % orientation in robot, [roll; pitch; yaw]
+  'orientationDegrees', [90;180;0],...                 % orientation in robot, [roll; pitch; yaw]
   'positionStd',        [0;0;0],...                 % position error std
   'orientationStd',     [0;0;0],...                 % orient. error std
   'imageSize',          [480;640],...               % image size
-  'pixErrorStd',        1.0,...                     % pixel error std
+  'pixErrorStd',        1.5,...                     % pixel error std
   'intrinsic',          [320;240;320;320],...       % intrinsic params [u0 v0 au av]
   'distortion',         [0;0],...                   % distortion params
   'frameInMap',         false,...                   % add sensor frame in slam map?
@@ -211,7 +211,7 @@ Opt = struct(...
     'plkLin',           struct(...      % opt. for Plucker and anchored Plucker lines init
       'nonObsMean',     [.1;0],...      % mean of non obs
       'nonObsStd',      [.25;1]),...    % std of non obs
-    'featQualityTh',    1500),...        % Feature quality threshold for harris point
+    'featQualityTh',    2000),...        % Feature quality threshold for harris point
   'obs',                struct(...    % Observation options
     'lines',            struct(...     % lines options
       'minLength',      20)));          % minimum segment length
@@ -221,7 +221,7 @@ Opt = struct(...
 %   - random
 SimOpt = struct(...                    
   'random',           struct(...      % random generator options
-    'newSeed',        false,...         % select new random seed?
+    'newSeed',        true,...         % select new random seed?
     'fixedSeed',      213255,...            % random seed for non-random runs
     'seed',           []),...          % current seed
   'obs',              Opt.obs);       % Observation options

@@ -14,6 +14,7 @@ switch Obs.ltype(4:6)
             	R = Sen.par.pixCov;
             case 'image'
             	% Maybe stuff for image is needed?
+                R = Sen.par.pixCov;
             otherwise
                 error('??? Unknown Raw data type ''%s''.',Raw.type)
         end
@@ -51,6 +52,8 @@ switch Raw.type
         centre = round(Obs.exp.e);                % mean
         bounds = round(sqrt(diag(Obs.exp.E)));    % 3sigma in u and v direction.
         
+        % disp([ Obs.exp.e Obs.meas.y])
+        
         sBounds = [centre-bounds,centre+bounds];  % The search region for the feature
         if ~any(sBounds < 1)
             %% Create sRegion if it's within the region, otherwise just ignore
@@ -78,25 +81,24 @@ switch Raw.type
             
             % Scans the region to find the patch that best fits
             Obs.app.sc = -1;
-            
             for i = 1:(sBounds(1,2)-sBounds(1,1)) % xBounds
                 for j = 1:(sBounds(2,2)-sBounds(2,1)) % yBounds
                     % nCentre = [centre(2);centre(1)];
                     c = [i;j]+centre-1;
                     rPatch = pix2patch(Raw.data.img, c, 15);
-                    
+                    a(i,j) = rPatch;
                     % Debugging: rPatch
                     % figure(4)
                     % imshow(rPatch.I)
                     
-                    tmpSc = zncc(...
-                        rPatch.I,...
+                    tmpSc = ssd(...
                         pred.I,...
-                        rPatch.SI,...
-                        pred.SI,...
-                        rPatch.SII,...
-                        pred.SII);
-                    disp(tmpSc)%, rPatch.SI, pred.SI])
+                        rPatch.I,...
+                        ...%pred.SI,...
+                        pred.SII,...
+                        ...%rPatch.SI,...
+                        rPatch.SII);
+                    % disp(tmpSc)%, rPatch.SI, pred.SI])
                     
                     % If the score is the current highest then update the
                     % values
@@ -114,18 +116,21 @@ switch Raw.type
             %  If so, set Obs.matched to true.
             if Obs.app.sc > scTh
             	Obs.matched = true; 
-                disp('matched')
-%             else
+                % disp('matched')
+            else
+%               Obs.meas.y   = zeros(size(Obs.meas.y));
+%               Obs.meas.R   = R;
+                Obs.matched  = false;
+                % Debugging
+                % disp('not matched')
 %                 disp('Resulting failure')
 %                 disp(Obs.app.sc)
-%                 sprintf('rPatch \t pred');
-%                 disp([rPatch.SI pred.SI])
+%                 sprintf('curr \t pred');
+%                 disp([Obs.app.curr.SI pred.SI])
 %                 figure(3)
-%                 imshow(rPatch.I)
+%                 imshow(Obs.app.curr.I)
 %                 figure(4)
 %                 imshow(pred.I)
-%                 close(3)
-%                 close(4)
             end
             
         end

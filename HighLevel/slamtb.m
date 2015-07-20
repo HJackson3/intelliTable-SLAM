@@ -71,7 +71,8 @@ userData;           % user-defined data. SCRIPT.
 
 % Clear user data - not needed anymore
 clear Robot Sensor World Time   % clear all user data
-cam = ipcam('http://172.30.56.42:8080/?action=stream'); % Youbot webcam
+% cam = ipcam('http://172.30.56.42:8080/?action=stream'); % Youbot webcam
+load('forwardsFacingRightFootage.mat');
 
 
 %% IV. Main loop
@@ -102,7 +103,7 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
             Raw(1) = struct(...
                 'type', 'image',...
                 'data', struct(...
-                  'img', rot90(snapshot(cam)))...
+                  'img', f(currentFrame).image)...
                 );
 
         end % end of sensor
@@ -126,13 +127,20 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
         
         % Youbot motion
         % Changes the course of the Youbot if the simRob's vel changes
-        v = Rob(rob).state.x;
-        if any(Rob(rob).state.oldV ~= v(8:13))
-            disp('move')
-            Rob(rob) = userCommand(Rob(rob));
+%         v = Rob(rob).state.x;
+%         if any(Rob(rob).state.oldV ~= v(8:13))
+%             disp('move')
+%             Rob(rob) = userCommand(Rob(rob));
+%         end
+        
+        switch num2str(currentFrame)
+            case{'1'}
+                Tim.dt = 0;
+            otherwise
+                Tim.dt = seconds(f(currentFrame).time - f(currentFrame-1).time);
         end
         
-        Map.t = Map.t + Tim.dt;
+        Map.t = Map.t + Tim.dt; % Change dt here to the difference between the timestamps
         
         % Process sensor observations
         for sen = Rob(rob).sensors
