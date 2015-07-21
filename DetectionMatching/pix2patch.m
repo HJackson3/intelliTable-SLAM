@@ -36,13 +36,13 @@ pix0 = round(pix); % in case the given pixel is not integer
 
 if inSquare(pix,[1+h2 size(Img{imId},2)-h2 1+v2 size(Img{imId},1)-v2])
 
-    ptch.I    = Img{imId}(pix0(2)-v2:pix0(2)+v2,pix0(1)-h2:pix0(1)+h2);
+    ptch.I    = single(Img{imId}(pix0(2)-v2:pix0(2)+v2,pix0(1)-h2:pix0(1)+h2));
     ptch.SI   = sum(sum(ptch.I));
     ptch.SII  = sum(sum(ptch.I.*ptch.I));
 
 else % pixel is too close to the edge: return blank patch
 
-    ptch.I = zeros(vsize,hsize);
+    ptch.I = single(zeros(vsize,hsize));
     [ptch.SI,ptch.SII] = deal(0);
     ptch.bias = [0;0];
 

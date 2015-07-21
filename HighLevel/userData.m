@@ -32,7 +32,7 @@
 %   - sampling time, first and last frames
 Time = struct(...
   'dt',                   .1,...          % sampling time, seconds
-  'firstFrame',           1,...           % first frame #
+  'firstFrame',           50,...           % first frame #
   'lastFrame',            500);           % last frame #
 
 % Simulated world
@@ -107,12 +107,12 @@ Sensor{1} = struct(...
   'name',               'Micropix',...              % sensor name
   'type',               'pinHole',...               % type of sensor
   'robot',              1,...                       % robot where it is mounted
-  'position',           [.2;0;.4],...                % position in robot
-  'orientationDegrees', [-90;0;180],...                 % orientation in robot, [roll; pitch; yaw]
+  'position',           [.2;0;.4],...               % position in robot
+  'orientationDegrees', [-90;0;180],...             % orientation in robot, [roll; pitch; yaw]
   'positionStd',        [0;0;0],...                 % position error std
   'orientationStd',     [0;0;0],...                 % orient. error std
   'imageSize',          [480;640],...               % image size
-  'pixErrorStd',        1.5,...                     % pixel error std
+  'pixErrorStd',        1.3,...                     % pixel error std
   'intrinsic',          [320;240;320;320],...       % intrinsic params [u0 v0 au av]
   'distortion',         [0;0],...                   % distortion params
   'frameInMap',         false,...                   % add sensor frame in slam map?

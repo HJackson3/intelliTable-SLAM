@@ -90,12 +90,12 @@ switch Raw.type
                     % figure(4)
                     % imshow(rPatch.I)
                     
-                    tmpSc = ssd(... % Can also use zncc (this is what the SI is for).
+                    tmpSc = zncc(... % Can also use zncc (this is what the SI is for).
                         pred.I,...
                         rPatch.I,...
-                        ...%pred.SI,...
+                        pred.SI,...
                         pred.SII,...
-                        ...%rPatch.SI,...
+                        rPatch.SI,...
                         rPatch.SII);
                     % disp(tmpSc)%, rPatch.SI, pred.SI])
                     
@@ -127,7 +127,8 @@ switch Raw.type
 %                 sprintf('curr \t pred');
 %                 disp([Obs.app.curr.SI pred.SI])
 %                 figure(3)
-%                 imshow(Obs.app.curr.I)
+%                 disp(Obs.app.curr)
+%                 imshow(Obs.app.curr.patch.I)
 %                 figure(4)
 %                 imshow(pred.I)
             end
