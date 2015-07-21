@@ -13,7 +13,6 @@ switch Obs.ltype(4:6)
             	rawDataLmks = Raw.data.points;
             	R = Sen.par.pixCov;
             case 'image'
-            	% Maybe stuff for image is needed?
                 R = Sen.par.pixCov;
             otherwise
                 error('??? Unknown Raw data type ''%s''.',Raw.type)
@@ -86,12 +85,12 @@ switch Raw.type
                     % nCentre = [centre(2);centre(1)];
                     c = [i;j]+centre-1;
                     rPatch = pix2patch(Raw.data.img, c, 15);
-                    a(i,j) = rPatch;
+                    % a(i,j) = rPatch;
                     % Debugging: rPatch
                     % figure(4)
                     % imshow(rPatch.I)
                     
-                    tmpSc = ssd(...
+                    tmpSc = ssd(... % Can also use zncc (this is what the SI is for).
                         pred.I,...
                         rPatch.I,...
                         ...%pred.SI,...

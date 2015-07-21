@@ -32,8 +32,8 @@
 %   - sampling time, first and last frames
 Time = struct(...
   'dt',                   .1,...          % sampling time, seconds
-  'firstFrame',           80,...           % first frame #
-  'lastFrame',            800);           % last frame #
+  'firstFrame',           1,...           % first frame #
+  'lastFrame',            500);           % last frame #
 
 % Simulated world
 %   - Simulation landmark sets, playground dimensions
@@ -85,7 +85,7 @@ Robot{1} = struct(...                      % CONSTANT VELOCITY EXAMPLE
   'orientationDegrees', [0;0;0],...             % orientation, in degrees, [roll; pitch; yaw].
   'positionStd',        [0;0;0],...             % position error, std
   'orientationStd',     [0;0;0],...             % orient. error, std, degrees
-  'velocity',           [0.01;0;0],...          % lin. velocity
+  'velocity',           [0.05;0;0],...          % lin. velocity
   'angularVelDegrees',  [0;0;0],...             % ang. velocity, in degrees
   'velStd',             [0;0;0],...             % lin. vel. error, std
   'angVelStd',          [0;0;0],...             % ang. vel. error, std, degrees
@@ -93,7 +93,7 @@ Robot{1} = struct(...                      % CONSTANT VELOCITY EXAMPLE
   'dwDegrees',          [0;0;0],...             % ang. vel. increment, degrees
   'dvStd',              [0;0;0],...             % vel perturbation std
   'dwStd',              [0;0;0],...             % ang vel pert. std, degrees
-  ...%'youbot',             Youbot('youbot2'),...   % youbot used
+  'youbot',             Youbot('youbot2'),...   % youbot used
   'camera',             'robot');               % Type of camera - none, webcam or robot
 
 
