@@ -39,6 +39,9 @@ userData;           % user-defined data. SCRIPT.
 % userDataPnt;        % user-defined data for points. SCRIPT.
 % userDataLin;        % user-defined data for lines. SCRIPT.
 
+% One can insert their own script here to make changes to the userData or
+% make new objects from a separate file.
+
 
 %% II. Initialize all data structures from user-defined data in userData.m
 % SLAM data
@@ -71,8 +74,8 @@ userData;           % user-defined data. SCRIPT.
 
 % Clear user data - not needed anymore
 clear Robot Sensor World Time   % clear all user data
-cam = ipcam('http://172.30.56.42:8080/?action=stream'); % Youbot webcam
-% load('forwardsFacingRightFootage.mat');
+% cam = ipcam('http://172.30.56.42:8080/?action=stream'); % Youbot webcam
+load('forwardsFacingRightFive.mat');
 
 
 %% IV. Main loop
@@ -100,12 +103,21 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
         for sen = Sen(1) % Sensor is chosen
 
             % Raw data is camera feed
+            if currentFrame == Tim.firstFrame
+                Raw(1).data = struct(...
+                    'time',  f(currentFrame).time);
+            end
             Raw(1) = struct(...
-                'type',         'image',                ...
-                'data',         struct(                 ...
-                  'img',          rot90(snapshot(cam)), ... % Captures and rotates the image from the camera
-                  'oldTime',      Raw.data.time,        ... % Captures last timestamp before reassigning
-                  'time',         datetime)             ... % Captures the time that the snapshot was taken
+                'type',         'image',                    ...
+                'data',         struct(                     ...
+               ...% For pre-recorded
+                  'img',          f(currentFrame).image,    ... % Captures and rotates the image from the camera
+                  'oldTime',      Raw.data.time,   ... % Captures last timestamp before reassigning
+                  'time',         f(currentFrame).time)     ... % Captures the time that the snapshot was taken
+               ...% For real-time   
+...%              'img',          rot90(snapshot(cam)),     ... % Captures and rotates the image from the camera
+...%              'oldTime',      Raw.data.time,            ... % Captures last timestamp before reassigning
+...%              'time',         datetime)                 ... % Captures the time that the snapshot was taken
                 );
 
         end % end of sensor
@@ -129,19 +141,13 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
         
         % Youbot motion
         % Changes the course of the Youbot if the simRob's vel changes
-        v = Rob(rob).state.x;
-        if any(Rob(rob).state.oldV ~= v(8:13))
-            disp('move')
-            Rob(rob) = userCommand(Rob(rob));
-        end
+%         v = Rob(rob).state.x;
+%         if any(Rob(rob).state.oldV ~= v(8:13))
+%             disp('move')
+%             Rob(rob) = userCommand(Rob(rob));
+%         end
         
-        switch num2str(currentFrame)
-            case{'1'}
-                Tim.dt = 0;
-            otherwise
-                Tim.dt = seconds(Raw.data.time - Raw.data.oldTime);
-        end
-        
+        Tim.dt = seconds(Raw.data.time - Raw.data.oldTime);
         Map.t = Map.t + Tim.dt; % Change dt here to the difference between the timestamps
         
         % Process sensor observations

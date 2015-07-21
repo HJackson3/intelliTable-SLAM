@@ -79,11 +79,10 @@ for sen = 1:numel(Sensor)
 
     Sen(sen) = So; % output sensor structure
 
-    % Create initial Raw structure
+    % Create empty Raw structure
     Raw(sen).type = '';
-    Raw(sen).data = struct(...
-        'time', datetime); % Time at initialisation
-
+    Raw(sen).data = struct([]);
+    
 end
 
 
