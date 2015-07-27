@@ -49,7 +49,7 @@ switch lmkType(4:6)
                 'patch', patch,...
                 'pose0', pose);
         else
-            newId = 0;      % Setting values to empty so we know 
+            newId = 0;      % Setting values to empty so we know
             meas.y = [];    % that no adequate features were found.
             app = [];
         end

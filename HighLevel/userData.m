@@ -28,6 +28,13 @@
 
 %   Copyright 2008-2009 Joan Sola @ LAAS-CNRS.
 
+% Pre-recorded sensor footage (if used).
+%load('forwardsFacingRightOne.mat');
+% load('forwardsFacingRightTwo.mat');
+% load('forwardsFacingRightThree.mat');
+% load('forwardsFacingRightFour.mat');
+load('forwardsFacingRightFive.mat');
+
 % Time variables 
 %   - sampling time, first and last frames
 Time = struct(...
@@ -112,7 +119,7 @@ Sensor{1} = struct(...
   'positionStd',        [0;0;0],...                 % position error std
   'orientationStd',     [0;0;0],...                 % orient. error std
   'imageSize',          [480;640],...               % image size
-  'pixErrorStd',        1.3,...                     % pixel error std
+  'pixErrorStd',        1.5,...                     % pixel error std
   'intrinsic',          [320;240;320;320],...       % intrinsic params [u0 v0 au av]
   'distortion',         [0;0],...                   % distortion params
   'frameInMap',         false,...                   % add sensor frame in slam map?
@@ -189,7 +196,7 @@ Sensor{1} = struct(...
 % Estimation options 
 Opt = struct(...
   'map',                struct(...      % options for the map
-    'numLmks',          73,...          % number of 3d landmarks
+    'numLmks',          15,...          % number of 3d landmarks
     'lmkSize',          6),...          % Size of landmark
   'correct',            struct(...      % options for lmk correction
     'reprojectLmks',    true,...        % reproject lmks after active search?
@@ -201,7 +208,7 @@ Opt = struct(...
       'innType',        'ortDst',...    % innovation type for lines
       'extPolicy',      false,...       % line extending policy ?
       'extSwitch',      10),...         % extension policy switch point in pixels
-    'appScTh',          .95),...       % Appearance score threshold for the zncc
+    'appScTh',          .5),...       % Appearance score threshold for the zncc
   'init',               struct(...      % Options for initialization
     'nbrInits',         [5 1],...       % number of inits [firstFrame, otherFrames]
     'initType',         'idpPnt',...    % Type of lmk to use for init

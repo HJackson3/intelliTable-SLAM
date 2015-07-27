@@ -74,17 +74,13 @@ switch Raw.type
         % randomised array
         [x, I] = max(rand(5).*~Sen.imGrid.usedCell);
         [~, J] = max(x); % because we want the 2D co-ordinates we need to run max() twice
-        best = [I(J),J]+1; % co-ordinates for the random unoccupied cell
+        best = [I(J),J]; % co-ordinates for the random unoccupied cell
         
         % extract the image of the cell
         ySegment = ((best(1)-1)*128)+1:best(1)*128;
         xSegment = ((best(2)-1)*96)+1:best(2)*96;
         cellData = Raw.data.img(xSegment,ySegment);
         cellCorner = [ySegment(1);xSegment(1)];
-        
-        % For debugging - shows the unoccupied patch
-        % figure(3)
-        % imshow(cellData);
         
         [newId, app, meas, exp, inn] = detectFeat(...
             Opt.init.initType,          ...

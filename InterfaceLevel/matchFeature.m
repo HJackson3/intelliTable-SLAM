@@ -51,15 +51,8 @@ switch Raw.type
         centre = round(Obs.exp.e);                % mean
         bounds = round(sqrt(diag(Obs.exp.E)));    % 3sigma in u and v direction.
         
-        % disp([ Obs.exp.e Obs.meas.y])
-        
         sBounds = [centre-bounds,centre+bounds];  % The search region for the feature
         if ~any(sBounds < 1)
-            %% Create sRegion if it's within the region, otherwise just ignore
-            % 
-            
-            % sRegion = pix2patch(Raw.data.img,centre,2*bounds(1),2*bounds(2));
-        
             %% Store the predicted appearance of the landmark in Obs.app.pred
             %  Resize the appearance using a rotation and zoom factor to
             %  predict appearance in new position.
@@ -69,28 +62,18 @@ switch Raw.type
 
             %% Scan the rectangular region for the modified patch using ZNCC
             pred = Obs.app.pred;
-
-            % Debugging: image of pred to compare with what we know about
-            % where the feature should be.
-            % figure(3)
-            % imshow(pred.I);
-            
-            % This current implementation is quite slow - find a way to
-            % speed it up.
+            Obs.app.sc = -1;
             
             % Scans the region to find the patch that best fits
-            Obs.app.sc = -1;
             for i = 1:(sBounds(1,2)-sBounds(1,1)) % xBounds
                 for j = 1:(sBounds(2,2)-sBounds(2,1)) % yBounds
-                    % nCentre = [centre(2);centre(1)];
+                    % Generate patch to search
                     c = [i;j]+centre-1;
                     rPatch = pix2patch(Raw.data.img, c, 15);
-                    % a(i,j) = rPatch;
-                    % Debugging: rPatch
-                    % figure(4)
-                    % imshow(rPatch.I)
                     
-                    tmpSc = zncc(... % Can also use zncc (this is what the SI is for).
+                    % Calculate score between patch in region and predicted
+                    % appearance.
+                    tmpSc = zncc(... % Can also use ssd (remove the SI values).
                         pred.I,...
                         rPatch.I,...
                         pred.SI,...
@@ -125,12 +108,8 @@ switch Raw.type
 %                 disp('Resulting failure')
 %                 disp(Obs.app.sc)
 %                 sprintf('curr \t pred');
-%                 disp([Obs.app.curr.SI pred.SI])
-%                 figure(3)
-%                 disp(Obs.app.curr)
-%                 imshow(Obs.app.curr.patch.I)
-%                 figure(4)
-%                 imshow(pred.I)
+%                 figure(3);imshow(Obs.app.curr.I);
+%                 figure(4);imshow(pred.I);
             end
             
         end
