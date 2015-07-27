@@ -58,10 +58,10 @@ switch Raw.type
             %  predict appearance in new position.
 
             % xDiff = abs(sig.pose0 - Sen.frame.x);            % Rotation and zoom factor
-            Obs.app.pred = sig.patch; % patchResize(sig.patch, xDiff);    % Predicted appeareance
+            Obs.app.pred = sig; % patchResize(sig.patch, xDiff);    % Predicted appeareance
 
             %% Scan the rectangular region for the modified patch using ZNCC
-            pred = Obs.app.pred;
+            pred = Obs.app.pred.patch;
             Obs.app.sc = -1;
             
             % Scans the region to find the patch that best fits
@@ -86,7 +86,9 @@ switch Raw.type
                     % values
                     if tmpSc > Obs.app.sc
                         Obs.app.sc      = tmpSc;    % Setting score and current appearance
-                        Obs.app.curr    = rPatch;   % for the patch
+                        Obs.app.curr    = struct(...
+                                            'patch',    rPatch,...
+                                            'pose',     Sen.frame.x);   % for the patch
                         
                         Obs.meas.y      = c;    % Store best pixel
                         Obs.measured    = true;

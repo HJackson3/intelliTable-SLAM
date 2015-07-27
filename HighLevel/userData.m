@@ -256,7 +256,7 @@ FigOpt = struct(...
   'rendPeriod',     1,...           % frames to skip for faster processing
   'createVideo',    false,...       % create video sequences?
   'map',            struct(...      % map figure options
-    'size',         [320 240],...   % map figure size
+    'size',         [640 480],...   % map figure size
     'lims',         struct(...      % playground limits
       'xMin',            -10,...             
       'xMax',             10,...
@@ -291,7 +291,7 @@ FigOpt = struct(...
       'ground',     [.8 .8 .8],...   % simulated robots and sensors
       'label',      [.0 .5 0])),...  % landmark ID labels
   'sensor',         struct(...      % sensor figures options
-    'size',         [320 240],...    % sensor figure size
+    'size',         [640 480],...    % sensor figure size
     'showEllip',    false,...        % show ellipses?
     'colors',       struct(...       % Sensor figure colors:
       'border',     .8*[1 1 1],...    %    
