@@ -75,7 +75,7 @@ userData;           % user-defined data. SCRIPT.
 % Clear user data - not needed anymore
 clear Robot Sensor World Time   % clear all user data
 % cam = ipcam('http://172.30.56.42:8080/?action=stream'); % Youbot webcam
-
+file = fopen('match','w');
 
 %% IV. Main loop
 for currentFrame = Tim.firstFrame : Tim.lastFrame
@@ -109,11 +109,11 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
             Raw(1) = struct(...
                 'type',         'image',                    ...
                 'data',         struct(                     ...
-               ...% For pre-recorded
+               ...For pre-recorded
                   'img',        f(currentFrame).image,      ... % Captures and rotates the image from the camera
                   'oldTime',    Raw.data.time,              ... % Captures last timestamp before reassigning
                   'time',       f(currentFrame).time)       ... % Captures the time that the snapshot was taken
-               ...% For real-time   
+               ...For real-time   
 ...%              'img',        rot90(snapshot(cam)),       ... % Captures and rotates the image from the camera
 ...%              'oldTime',    Raw.data.time,              ... % Captures last timestamp before reassigning
 ...%              'time',       datetime)                   ... % Captures the time that the snapshot was taken
@@ -159,7 +159,8 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
                 Raw(sen),   ...
                 Lmk,        ...   
                 Obs(sen,:), ...
-                Opt) ;
+                Opt,        ...
+                file) ;
 
             % disp([Obs(sen,1).meas.y;Obs(sen,1).exp.e])
             
@@ -225,11 +226,11 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
     
 
 end
+fclose(file);
 
 %% V. Post-processing
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Enter post-processing code here
-
 
 
 % ========== End of function - Start GPL license ==========

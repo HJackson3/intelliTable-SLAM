@@ -38,12 +38,16 @@ switch lmkType(4:6)
 
     case 'Pnt'
         
-        [sc, meas, exp, inn] = detectPnt(lmkIds, raw, cellCorner, pixCov);
+        [sc, meas, exp, inn] = detectPnt(raw, cellCorner, pixCov);
         % If harris point is above threshold
-        if hFeat < sc
+        if hFeat < sc && ~any(meas.y < 15)
     
             % Create newId for lmk - A list of used lmkIds is given to us
-            newId = length(lmkIds)+1;
+            newId = 1;
+            while any(lmkIds == newId)
+                newId = newId + 1;
+            end
+            
             patch = pix2patch(rawB,meas.y,15); % This is a 9x9 to 15x15 patch around the selected pixel % [meas.y(2);meas.y(1)]
             app    = struct(...
                 'patch', patch,...

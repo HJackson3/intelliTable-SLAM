@@ -1,4 +1,4 @@
-function [sc, meas, exp, inn] = detectPnt(lmkIds, raw, coords, pixCov)
+function [sc, meas, exp, inn] = detectPnt(raw, coords, pixCov)
 
 %SIMDETECTPNT Detect 2D point in simulated Raw data.
 %   [Y,R,NEWID] = SIMDETECTPNT(LMKIDS,RAW,PIXCOV) return the coordinates Y,

@@ -80,7 +80,7 @@ switch Raw.type
         ySegment = ((best(1)-1)*128)+1:best(1)*128;
         xSegment = ((best(2)-1)*96)+1:best(2)*96;
         cellData = Raw.data.img(ySegment,xSegment);
-        cellCorner = [ySegment(1);xSegment(1)];
+        cellCorner = [xSegment(1);ySegment(1)];
         
         [newId, app, meas, exp, inn] = detectFeat(...
             Opt.init.initType,          ...

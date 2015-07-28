@@ -1,4 +1,4 @@
-function [Rob,Sen,Lmk,Obs] = correctKnownLmks(Rob, Sen, Raw, Lmk, Obs, Opt)
+function [Rob,Sen,Lmk,Obs] = correctKnownLmks(Rob, Sen, Raw, Lmk, Obs, Opt,f)
 
 % CORRECTKNOWNLMKS  Correct known landmarks.
 %   [Rob,Sen,Lmk,Obs] = correctKnownLmks(Rob, Sen, Raw, Lmk, Obs, Opt)
@@ -100,7 +100,7 @@ if any(vis) % Consider only visible observations
         Lmk(lmk).nSearch = Lmk(lmk).nSearch + 1;
 
         % 3. TRY TO MATCH FEATURE
-        Obs(lmk) = matchFeature(Sen,Raw,Obs(lmk),Lmk(lmk).sig, Opt.correct.appScTh);
+        Obs(lmk) = matchFeature(f,Sen,Raw,Obs(lmk),Lmk(lmk).sig, Opt.correct.appScTh);
         
         if Obs(lmk).matched
 

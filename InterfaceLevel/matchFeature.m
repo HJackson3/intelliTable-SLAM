@@ -1,4 +1,4 @@
-function Obs = matchFeature(Sen,Raw,Obs,sig,scTh)
+function Obs = matchFeature(f,Sen,Raw,Obs,sig,scTh)
 
 % MATCHFEATURE  Match feature.
 % 	Obs = MATCHFEATURE(Sen,Raw,Obs) matches one feature in Raw to the predicted
@@ -63,22 +63,26 @@ switch Raw.type
             %% Scan the rectangular region for the modified patch using ZNCC
             pred = Obs.app.pred.patch;
             Obs.app.sc = -1;
+            Obs.measured = false; % Reset measured to default value
+            
+            % NEEDS FIXING - THE c VALUE IS WRONG - STARTS FROM CENTRE,
+            % ONLY GOES UP!
             
             % Scans the region to find the patch that best fits
             for i = 1:(sBounds(1,2)-sBounds(1,1)) % xBounds
                 for j = 1:(sBounds(2,2)-sBounds(2,1)) % yBounds
                     % Generate patch to search
-                    c = [i;j]+centre-1;
+                    c = [i;j]+centre-1;% min(sBounds,[],2);
                     rPatch = pix2patch(Raw.data.img, c, 15);
                     
                     % Calculate score between patch in region and predicted
                     % appearance.
                     tmpSc = zncc(... % Can also use ssd (remove the SI values).
-                        pred.I,...
-                        rPatch.I,...
-                        pred.SI,...
-                        pred.SII,...
-                        rPatch.SI,...
+                        pred.I,     ...
+                        rPatch.I,   ...
+                        pred.SI,    ...
+                        pred.SII,   ...
+                        rPatch.SI,  ...
                         rPatch.SII);
                     % disp(tmpSc)%, rPatch.SI, pred.SI])
                     
@@ -88,7 +92,7 @@ switch Raw.type
                         Obs.app.sc      = tmpSc;    % Setting score and current appearance
                         Obs.app.curr    = struct(...
                                             'patch',    rPatch,...
-                                            'pose',     Sen.frame.x);   % for the patch
+                                            'pose0',     Sen.frame.x);   % for the patch
                         
                         Obs.meas.y      = c;    % Store best pixel
                         Obs.measured    = true;
@@ -100,13 +104,14 @@ switch Raw.type
             %  If so, set Obs.matched to true.
             if Obs.app.sc > scTh
             	Obs.matched = true; 
-                % disp('matched')
+                fprintf(f,'%d\n',1);
             else
-%               Obs.meas.y   = zeros(size(Obs.meas.y));
-%               Obs.meas.R   = R;
+                Obs.meas.y   = zeros(size(Obs.meas.y));
+                Obs.meas.R   = R;
                 Obs.matched  = false;
+                fprintf(f,'%d\n',0);
                 % Debugging
-                % disp('not matched')
+%                 disp('not matched')
 %                 disp('Resulting failure')
 %                 disp(Obs.app.sc)
 %                 sprintf('curr \t pred');
