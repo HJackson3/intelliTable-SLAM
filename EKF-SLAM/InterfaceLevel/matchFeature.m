@@ -108,16 +108,8 @@ switch Raw.type
             else
 %                 Obs.meas.y   = zeros(size(Obs.meas.y));
 %                 Obs.meas.R   = R;
-%                 Obs.matched  = false;
-%                 fprintf(f,'%d\n',0);
-%                 % Debugging
-%                 disp('not matched')
-%                 disp('Resulting failure')
-%                 disp(Obs.app.sc)
-% %                 sprintf('curr \t pred');
-%                 figure(3);image(Obs.app.curr.patch.I);
-%                 figure(4);image(pred.I);
-                disp('')
+                Obs.matched  = false;
+                fprintf(f,'%d\n',0);
             end
             
         end
