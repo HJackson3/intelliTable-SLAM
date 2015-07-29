@@ -74,6 +74,8 @@ userData;           % user-defined data. SCRIPT.
 
 % Clear user data - not needed anymore
 clear Robot Sensor World Time   % clear all user data
+
+% Set up camera and files for post-processing
 % cam = ipcam('http://172.30.56.42:8080/?action=stream'); % Youbot webcam
 file = fopen('match','w'); % File for match_rate calculations
 

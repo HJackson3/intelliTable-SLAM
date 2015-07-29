@@ -29,7 +29,7 @@
 %   Copyright 2008-2009 Joan Sola @ LAAS-CNRS.
 
 % Pre-recorded sensor footage (if used).
-%load('forwardsFacingRightOne.mat');
+% load('forwardsFacingRightOne.mat');
 % load('forwardsFacingRightTwo.mat');
 % load('forwardsFacingRightThree.mat');
 % load('forwardsFacingRightFour.mat');
@@ -218,7 +218,7 @@ Opt = struct(...
     'plkLin',           struct(...      % opt. for Plucker and anchored Plucker lines init
       'nonObsMean',     [.1;0],...      % mean of non obs
       'nonObsStd',      [.25;1]),...    % std of non obs
-    'featQualityTh',    3000),...        % Feature quality threshold for harris point
+    'featQualityTh',    2000),...        % Feature quality threshold for harris point
   'obs',                struct(...    % Observation options
     'lines',            struct(...     % lines options
       'minLength',      20)));          % minimum segment length
