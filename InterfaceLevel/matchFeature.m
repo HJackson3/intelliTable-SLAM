@@ -49,7 +49,7 @@ switch Raw.type
         %  of Obs.exp.E).
         
         centre = round(Obs.exp.e);                % mean
-        bounds = round(sqrt(diag(Obs.exp.E)));    % 3sigma in u and v direction.
+        bounds = round(sqrt(diag(Obs.inn.Z)));    % 3sigma in u and v direction.
         
         sBounds = [centre-bounds,centre+bounds];  % The search region for the feature
         if ~any(sBounds < 1)
@@ -106,17 +106,18 @@ switch Raw.type
             	Obs.matched = true; 
                 fprintf(f,'%d\n',1);
             else
-                Obs.meas.y   = zeros(size(Obs.meas.y));
-                Obs.meas.R   = R;
-                Obs.matched  = false;
-                fprintf(f,'%d\n',0);
-                % Debugging
+%                 Obs.meas.y   = zeros(size(Obs.meas.y));
+%                 Obs.meas.R   = R;
+%                 Obs.matched  = false;
+%                 fprintf(f,'%d\n',0);
+%                 % Debugging
 %                 disp('not matched')
 %                 disp('Resulting failure')
 %                 disp(Obs.app.sc)
-%                 sprintf('curr \t pred');
-%                 figure(3);imshow(Obs.app.curr.I);
-%                 figure(4);imshow(pred.I);
+% %                 sprintf('curr \t pred');
+%                 figure(3);image(Obs.app.curr.patch.I);
+%                 figure(4);image(pred.I);
+                disp('')
             end
             
         end

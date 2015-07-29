@@ -119,7 +119,7 @@ Sensor{1} = struct(...
   'positionStd',        [0;0;0],...                 % position error std
   'orientationStd',     [0;0;0],...                 % orient. error std
   'imageSize',          [480;640],...               % image size
-  'pixErrorStd',        1.5,...                     % pixel error std
+  'pixErrorStd',        1.0,...                     % pixel error std
   'intrinsic',          [320;240;320;320],...       % intrinsic params [u0 v0 au av]
   'distortion',         [0;0],...                   % distortion params
   'frameInMap',         false,...                   % add sensor frame in slam map?
