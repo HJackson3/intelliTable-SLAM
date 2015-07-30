@@ -116,11 +116,11 @@ Sensor{1} = struct(...
   'frameInMap',         false,...                   % add sensor frame in slam map?
   'imGrid',             struct(...                  % grid for Active Search
     'imSize',           [480;640],...               % copy of imageSize
-    'numCells',         [5;5],...                   % number of H and V grid cells
+    'numCells',         [10,10],...                 % number of H and V grid cells
     'skipOuter',        true,...                    % skip outer cells for initialization?
-    'usedCell',         false(5,5),...              % boolean matrix of flags indicating used cells
-    'yticks',           [0;128;256;384;512;640],... % ycoordinates of cell corners
-    'xticks',           [0;96;192;288;384;480]));   % xcoordinates of cell corners
+    'usedCell',         [],...                      % boolean matrix of flags indicating used cells
+    'yticks',           [],...                      % ycoordinates of cell corners
+    'xticks',           []));                       % xcoordinates of cell corners
 
 % Sensor{2} = struct(...
 %   'id',                 2,...           % sensor identifier

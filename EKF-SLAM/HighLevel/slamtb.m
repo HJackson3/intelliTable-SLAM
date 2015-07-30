@@ -130,9 +130,9 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
                   'time',       time)                       ... Captures the time that the snapshot was taken
                 );
 
-        end % end of sensor
+        end % end of Sensor
 
-    end    
+    end % end of Robot   
 
     % 2. ESTIMATION
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

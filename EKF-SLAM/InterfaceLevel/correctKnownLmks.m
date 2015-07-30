@@ -48,7 +48,7 @@ global Map
 % 0. UPDATE ROB AND SEN INFO FROM MAP
 Rob = map2rob(Rob);
 Sen = map2sen(Sen);
-Sen.imGrid.usedCell = false(5,5);
+Sen.imGrid.usedCell = false(Sen.imGrid.numCells);
 
 % 1. PROJECT ALL LMKS - get all expectations
 for lmk = find([Lmk.used])

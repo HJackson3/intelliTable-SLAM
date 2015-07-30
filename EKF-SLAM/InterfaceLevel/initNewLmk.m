@@ -72,13 +72,13 @@ switch Raw.type
         % This section is probably long-winded and slow; can do better
         % later. Designed to pick an unoccupied cell at random using a
         % randomised array
-        [x, I] = max(rand(5).*~Sen.imGrid.usedCell);
+        [x, I] = max(rand(Sen.imGrid.numCells).*~Sen.imGrid.usedCell);
         [~, J] = max(x); % because we want the 2D co-ordinates we need to run max() twice
         best = [I(J),J]; % co-ordinates for the random unoccupied cell
-        
+ 
         % extract the image of the cell
-        ySegment = ((best(1)-1)*128)+1:best(1)*128;
-        xSegment = ((best(2)-1)*96)+1:best(2)*96;
+        ySegment = Sen.imGrid.yticks(best(1))+1:Sen.imGrid.yticks(best(1)+1);
+        xSegment = Sen.imGrid.xticks(best(2))+1:Sen.imGrid.xticks(best(2)+1);
         cellData = Raw.data.img(ySegment,xSegment);
         cellCorner = [xSegment(1);ySegment(1)];
         
