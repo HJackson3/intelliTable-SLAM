@@ -24,7 +24,8 @@ for sen = 1:numel(Sensor)
 
     So.robot = Si.robot;
     
-    So.imGrid           = Si.imGrid;  % added 24/06/15 - the image grid for real images
+    % Added 24/06/15 - the image grid for real images
+    So.imGrid           = Si.imGrid;
     So.imGrid.usedCell  = false(So.imGrid.numCells);
     So.imGrid.yticks    = round(linspace(0, So.imGrid.imSize(2), So.imGrid.numCells(2)+1));
     So.imGrid.xticks    = round(linspace(0, So.imGrid.imSize(1), So.imGrid.numCells(1)+1));

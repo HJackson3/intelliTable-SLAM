@@ -79,6 +79,10 @@ robData;
 % cam = ipcam('http://172.30.56.42:8080/?action=stream'); % Youbot webcam
 % file = fopen('match','w'); % File for match_rate calculations
 
+if strcmp(Rob.camera, 'footage')
+    load(feed); % loads the pre-recorded footage set in robData.m
+end
+
 %% IV. Main loop
 for currentFrame = Tim.firstFrame : Tim.lastFrame
     
@@ -106,6 +110,7 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
             switch Rob(rob).camera % Set image and time values depending on the type of video feed
                 case 'footage'
                     % Raw data is camera feed
+                    
                     if currentFrame == Tim.firstFrame
                         Raw(1).data = struct(...
                             'time',  f(currentFrame).time);
@@ -113,6 +118,7 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
                     img     = f(currentFrame).image;
                     time    = f(currentFrame).time;
                 case 'robot'
+                    % Raw data is live feed
                     if currentFrame == Tim.firstFrame
                         Raw(1).data = struct(...
                             'time',  datetime);
@@ -120,7 +126,8 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
                     img     = rot90(snapshot(cam));
                     time    = datetime;                    
                 otherwise
-            end
+                    
+            end % End switch camera
             
             Raw(1) = struct(...
                 'type',         'image',                    ...

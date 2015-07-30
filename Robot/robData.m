@@ -13,8 +13,8 @@ Robot{1}.botType  = 'youbot'; % youbot used
 Robot{1}.camera   = 'footage';  % Type of camera - none, footage or robot
 
 % Pre-recorded sensor footage (if used).
-% load('forwardsFacingRightOne.mat');
-% load('forwardsFacingRightTwo.mat');
-% load('forwardsFacingRightThree.mat');
-% load('forwardsFacingRightFour.mat');
-load('forwardsFacingRightFive.mat');
+% feed = 'forwardsFacingRightOne.mat';
+% feed = 'forwardsFacingRightTwo.mat';
+% feed = 'forwardsFacingRightThree.mat';
+% feed = 'forwardsFacingRightFour.mat';
+feed = 'forwardsFacingRightFive.mat';
