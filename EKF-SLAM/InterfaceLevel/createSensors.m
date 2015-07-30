@@ -25,6 +25,7 @@ for sen = 1:numel(Sensor)
     So.robot = Si.robot;
     
     So.imGrid = Si.imGrid;  % added 24/06/15 - the image grid for real images
+    So.feed = 'none';       % Initialising footage feed type for later use
 
     % frame
     ep = [Si.position;deg2rad(Si.orientationDegrees)];

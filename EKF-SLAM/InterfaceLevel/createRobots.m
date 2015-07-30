@@ -18,7 +18,9 @@ for rob = 1:numel(Robot)
     Ro.name    = Ri.name;
     Ro.type    = Ri.type;
     Ro.motion  = Ri.motion;
-    % Ro.youbot  = Ri.youbot;
+    % New for intSLAM
+    Ro.botType = Ri.botType;
+    Ro.camera  = Ri.camera;
     
     Ro.sensors = [];
     

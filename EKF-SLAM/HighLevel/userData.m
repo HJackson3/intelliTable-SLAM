@@ -28,13 +28,6 @@
 
 %   Copyright 2008-2009 Joan Sola @ LAAS-CNRS.
 
-% Pre-recorded sensor footage (if used).
-% load('forwardsFacingRightOne.mat');
-% load('forwardsFacingRightTwo.mat');
-% load('forwardsFacingRightThree.mat');
-% load('forwardsFacingRightFour.mat');
-load('forwardsFacingRightFive.mat');
-
 % Time variables 
 %   - sampling time, first and last frames
 Time = struct(...
@@ -99,9 +92,7 @@ Robot{1} = struct(...                      % CONSTANT VELOCITY EXAMPLE
   'dv',                 [0;0;0],...             % velocity increment
   'dwDegrees',          [0;0;0],...             % ang. vel. increment, degrees
   'dvStd',              [0;0;0],...             % vel perturbation std
-  'dwStd',              [0;0;0],...             % ang vel pert. std, degrees
-  ...'youbot',             Youbot('youbot2'),...   % youbot used
-  'camera',             'robot');               % Type of camera - none, webcam or robot
+  'dwStd',              [0;0;0]);               % ang vel pert. std, degrees
 
 
 % Sensor things 

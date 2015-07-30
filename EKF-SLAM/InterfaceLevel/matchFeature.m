@@ -1,4 +1,4 @@
-function Obs = matchFeature(f,Sen,Raw,Obs,sig,scTh)
+function Obs = matchFeature(Sen,Raw,Obs,sig,scTh)
 
 % MATCHFEATURE  Match feature.
 % 	Obs = MATCHFEATURE(Sen,Raw,Obs) matches one feature in Raw to the predicted
@@ -104,12 +104,13 @@ switch Raw.type
             %  If so, set Obs.matched to true.
             if Obs.app.sc > scTh
             	Obs.matched = true; 
-                fprintf(f,'%d\n',1);
+                % fprintf(f,'%d\n',1); % For recording match_rate - turn on
+                % and feed file variable through from slamtb
             else
 %                 Obs.meas.y   = zeros(size(Obs.meas.y));
 %                 Obs.meas.R   = R;
                 Obs.matched  = false;
-                fprintf(f,'%d\n',0);
+                % fprintf(f,'%d\n',0);
             end
             
         end

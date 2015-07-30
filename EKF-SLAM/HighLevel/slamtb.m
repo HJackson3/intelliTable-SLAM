@@ -27,7 +27,7 @@
 %   Copyright Teresa Vidal-Calleja @ ACFR.
 %   See COPYING.TXT for full copyright license.
 
-%% OK we start here
+% OK we start here
 
 % clear workspace and declare globals
 clear
@@ -41,7 +41,7 @@ userData;           % user-defined data. SCRIPT.
 
 % One can insert their own script here to make changes to the userData or
 % make new objects from a separate file.
-
+robData;
 
 %% II. Initialize all data structures from user-defined data in userData.m
 % SLAM data
@@ -73,11 +73,11 @@ userData;           % user-defined data. SCRIPT.
 % etc., instead of creating large Matlab variables for data logging.
 
 % Clear user data - not needed anymore
-clear Robot Sensor World Time   % clear all user data
+% clear Robot Sensor World Time   % clear all user data
 
 % Set up camera and files for post-processing
 % cam = ipcam('http://172.30.56.42:8080/?action=stream'); % Youbot webcam
-file = fopen('match','w'); % File for match_rate calculations
+% file = fopen('match','w'); % File for match_rate calculations
 
 %% IV. Main loop
 for currentFrame = Tim.firstFrame : Tim.lastFrame
@@ -103,22 +103,31 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
 
         for sen = Sen(1) % Sensor is chosen
 
-            % Raw data is camera feed
-            if currentFrame == Tim.firstFrame
-                Raw(1).data = struct(...
-                    'time',  f(currentFrame).time);
+            switch Rob(rob).camera % Set image and time values depending on the type of video feed
+                case 'footage'
+                    % Raw data is camera feed
+                    if currentFrame == Tim.firstFrame
+                        Raw(1).data = struct(...
+                            'time',  f(currentFrame).time);
+                    end
+                    img     = f(currentFrame).image;
+                    time    = f(currentFrame).time;
+                case 'robot'
+                    if currentFrame == Tim.firstFrame
+                        Raw(1).data = struct(...
+                            'time',  datetime);
+                    end
+                    img     = rot90(snapshot(cam));
+                    time    = datetime;                    
+                otherwise
             end
+            
             Raw(1) = struct(...
                 'type',         'image',                    ...
                 'data',         struct(                     ...
-               ...For pre-recorded
-                  'img',        f(currentFrame).image,      ... % Captures and rotates the image from the camera
-                  'oldTime',    Raw.data.time,              ... % Captures last timestamp before reassigning
-                  'time',       f(currentFrame).time)       ... % Captures the time that the snapshot was taken
-               ...For real-time   
-...%              'img',        rot90(snapshot(cam)),       ... % Captures and rotates the image from the camera
-...%              'oldTime',    Raw.data.time,              ... % Captures last timestamp before reassigning
-...%              'time',       datetime)                   ... % Captures the time that the snapshot was taken
+                  'img',        img,                        ... Captures and rotates the image from the camera
+                  'oldTime',    Raw.data.time,              ... Captures last timestamp before reassigning
+                  'time',       time)                       ... Captures the time that the snapshot was taken
                 );
 
         end % end of sensor
@@ -144,8 +153,8 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
         % Changes the course of the Youbot if the simRob's vel changes
 %         v = Rob(rob).state.x;
 %         if any(Rob(rob).state.oldV ~= v(8:13))
-%             disp('move')
-%             Rob(rob) = userCommand(Rob(rob));
+%             sprintf('Updating robot''s movement')
+%             Rob(rob) = robChangeVel(Rob(rob));
 %         end
         
         Tim.dt = seconds(Raw.data.time - Raw.data.oldTime);
@@ -161,8 +170,7 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
                 Raw(sen),   ...
                 Lmk,        ...   
                 Obs(sen,:), ...
-                Opt,        ...
-                file) ;
+                Opt);
 
             % disp([Obs(sen,1).meas.y;Obs(sen,1).exp.e])
             
@@ -228,9 +236,11 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
     
 
 end
-fclose(file);
 
-%% V. Post-processing
+%% V. Robot change of movement
+
+
+%% VI. Post-processing
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Enter post-processing code here
 

@@ -1,5 +1,6 @@
-function Rob = userCommand( Rob )
-%USERCOMMAND Changes the velocity of the Youbot if the simBot changes.
+function Rob = robChangeVel( Rob )
+
+%ROBCHANGEVEL Changes the velocity of the Youbot if the simBot changes.
 %   The x and y velocity of the simBot as well as the z angular velocity
 %   are used to reset the base velocity of the Youbot object attached to
 %   the simulated bot.
