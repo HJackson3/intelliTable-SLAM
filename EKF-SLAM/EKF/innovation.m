@@ -33,6 +33,8 @@ function [z,Z,iZ,MD2,Z_e,Z_y] = innovation(y,R,e,E,f)
 
 %   Copyright 2008-2009 Joan Sola @ LAAS-CNRS.
 
+global MD
+
 if nargin == 4  % Use plain Euclidean innovation
     z   = y - e;
     Z   = R + E;
@@ -48,6 +50,7 @@ if nargout >= 3
     iZ = eye(size(Z,1))/Z;  % better than inv(Z) -- ask Matlab!
     if nargout >= 4
         MD2 = z'*iZ*z;
+        fprintf(MD,'%s\n',MD2);
     end
 end
 

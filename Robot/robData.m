@@ -7,11 +7,6 @@
 
 %% Set up the relevant variables (Robot, Camera, etc.).
 
-% Robot variables - added to the existing Robot structure from
-% EKF-SLAM\userData.m
-Robot{1}.botType  = 'youbot'; % youbot used
-Robot{1}.camera   = 'footage';  % Type of camera - none, footage or robot
-
 % Pre-recorded sensor footage (if used).
 % feed = 'forwardsFacingRightOne.mat';
 % feed = 'forwardsFacingRightTwo.mat';

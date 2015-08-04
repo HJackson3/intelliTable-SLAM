@@ -92,7 +92,9 @@ Robot{1} = struct(...                      % CONSTANT VELOCITY EXAMPLE
   'dv',                 [0;0;0],...             % velocity increment
   'dwDegrees',          [0;0;0],...             % ang. vel. increment, degrees
   'dvStd',              [0;0;0],...             % vel perturbation std
-  'dwStd',              [0;0;0]);               % ang vel pert. std, degrees
+  'dwStd',              [0;0;0],...             % ang vel pert. std, degrees
+  'botType',            'youbot',...           % youbot used
+  'camera',             'footage');             % Type of camera - none, footage or robot
 
 
 % Sensor things 

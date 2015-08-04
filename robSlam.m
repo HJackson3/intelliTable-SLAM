@@ -8,4 +8,13 @@
 %  his SLAM algorithm, with updates for real-time footage from a
 %  non-simulated robot, to build a map of the robot's environment.
 
+global MD
+
+MD = fopen('mahalanobis','w');
+
 slamtb;
+
+fclose('all');
+
+x = load('mahalanobis');
+disp(mean(x))

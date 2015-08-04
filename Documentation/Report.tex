@@ -7,6 +7,7 @@
 \usepackage{amssymb}
 \usepackage{epstopdf}
 \usepackage{cite}
+\usepackage{hyperref}
 \DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
 
 \title{EKFmonoSLAM for the IntelliTable robot}
@@ -16,13 +17,19 @@
 \begin{document}
 \maketitle
 \section{Introduction}
-The EKFmonoSLAM uses a EKF SLAM algorithm originally designed by Joan Sola ~\cite{sola2012impact}
-\section{Quick Setup}
+The EKFmonoSLAM uses a EKF SLAM algorithm originally designed by Joan Sola ~\cite{sola2012impact}.
+\section{Quick Set-up}
+This section outlines the steps that need to be taken to set up the SLAM algorithm software in MATLAB. This set-up assumes you have MATLAB already installed.
+\\\\
+The software for running the SLAM algorithm is publicly available online\footnote{\url{https://github.com/HJackson3/intelliTable-SLAM}}.
 
+\section{Processing speed considerations}
+
+\section{Transfer to the intelliTable}
 
 %\subsection{}
 
-
+\clearpage
 \bibliography{myBib}{}
 \bibliographystyle{plain}
-\end{document}  
+\end{document}
