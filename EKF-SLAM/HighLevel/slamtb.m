@@ -31,7 +31,7 @@
 
 % clear workspace and declare globals
 clear
-global Map    
+global Map PT
 
 %% I. Specify user-defined options - EDIT USER DATA FILE userData.m
 
@@ -86,6 +86,16 @@ end
 %% IV. Main loop
 for currentFrame = Tim.firstFrame : Tim.lastFrame
     
+    % Before beginning - record the time
+    if currentFrame ~= Tim.firstFrame    
+        old_now = now;
+        now = datetime;
+        processing_time = seconds(now-old_now);
+        fprintf(PT,'%s\n',processing_time);
+    else
+        now = datetime;
+    end
+        
     % 1. SIMULATION
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

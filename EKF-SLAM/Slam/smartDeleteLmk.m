@@ -22,12 +22,12 @@ if Lmk.nSearch >= 10
     inlierRatio = Lmk.nInlier / Lmk.nMatch;
 
     if matchRatio < 0.1 
-        %fprintf('Deleted unstable landmark ''%d''.\n',Lmk.id)
+        fprintf('Deleted unstable landmark ''%d''.\n',Lmk.id)
         [Lmk,Obs] = deleteLmk(Lmk,Obs);
     end
 
     if inlierRatio < 0.5
-        %fprintf('Deleted inconsistent landmark ''%d''.\n',Lmk.id)
+        fprintf('Deleted inconsistent landmark ''%d''.\n',Lmk.id)
         [Lmk,Obs] = deleteLmk(Lmk,Obs);
     end
     

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2015.8.4)  4 AUG 2015 15:40
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2015.8.4)  5 AUG 2015 10:34
 entering extended mode
 **Report.tex
 (Report.tex
@@ -404,52 +404,4 @@ LaTeX Info: Redefining \ref on input line 17.
 LaTeX Info: Redefining \pageref on input line 17.
 LaTeX Info: Redefining \nameref on input line 17.
 
-(Report.out) (Report.out)
-\@outlinefile=\write3
-
-Overfull \hbox (20.33038pt too wide) in paragraph at lines 20--21
-[]\OT1/cmr/m/n/10.95 The EKF-monoSLAM uses a EKF SLAM al-go-rithm orig-i-nally 
-de-signed by Joan Sola [[]1[]]. 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 22--25
-
- []
-
-[1{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}] (Report.bbl)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 35.
- [2
-
-]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 35.
-
-(Report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 35.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 35.
-Package rerunfilecheck Info: File `Report.out' has not changed.
-(rerunfilecheck)             Checksum: D579E8FBC2993773B0B721E156DE350A;286.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 35.
- ) 
-Here is how much of TeX's memory you used:
- 6933 strings out of 493698
- 98077 string characters out of 3144416
- 188077 words of memory out of 3000000
- 10005 multiletter control sequences out of 15000+200000
- 9107 words of font info for 35 fonts, out of 3000000 for 9000
- 1186 hyphenation exceptions out of 8191
- 42i,5n,32p,343b,332s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Pr
-ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Program F
-iles/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKT
-eX 2.9/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Program Files/MiKTeX 2.9/fon
-ts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/p
-ublic/amsfonts/cm/cmr9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsf
-onts/cm/cmti9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
-mtt9.pfb>
-Output written on Report.pdf (2 pages, 107496 bytes).
-PDF statistics:
- 75 PDF objects out of 1000 (max. 8388607)
- 10 named destinations out of 1000 (max. 500000)
- 41 words of extra memory for PDF output out of 10000 (max. 10000000)
-
+(Report.out) (Report.out
