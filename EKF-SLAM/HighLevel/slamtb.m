@@ -168,11 +168,13 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
         
         % Youbot motion
         % Changes the course of the Youbot if the simRob's vel changes
-%         v = Rob(rob).state.x;
-%         if any(Rob(rob).state.oldV ~= v(8:13))
-%             sprintf('Updating robot''s movement')
-%             Rob(rob) = robChangeVel(Rob(rob));
-%         end
+        if Rob(rob).camera == 'robot'
+            v = Rob(rob).state.x;
+            if any(Rob(rob).state.oldV ~= v(8:13))
+                sprintf('Updating robot''s movement')
+                Rob(rob) = robChangeVel(Rob(rob));
+            end
+        end
         
         Tim.dt = seconds(Raw.data.time - Raw.data.oldTime);
         Map.t = Map.t + Tim.dt; % Change dt here to the difference between the timestamps
