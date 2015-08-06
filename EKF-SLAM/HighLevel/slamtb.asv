@@ -166,8 +166,7 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
     for rob = [Rob.rob]
 
         % Update motion to avoid collision here - also simple navigation.
-            % Was thinking slow down to a point or turn left/right to
-            % avoid? Maybe both?
+            % Was thinking slow down
         
         % Robot motion
         % NOTE: in a regular, non-simulated SLAM, this line is not here and

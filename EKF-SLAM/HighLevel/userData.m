@@ -38,7 +38,8 @@ Time = struct(...
 % Simulated world
 %   - Simulation landmark sets, playground dimensions
 World = struct(...
-  'points',           [],... % 3d point landmarks - see THICKCLOISTER. 
+  'points',           [],... % For real image 
+  ...'points',           thickCloister(-6,6,-6,6,1,7),... % For simulation
   'segments',         []);  % 3D segments - see HOUSE. 
     
 % Robot things with their controls
@@ -93,7 +94,7 @@ Robot{1} = struct(...                      % CONSTANT VELOCITY EXAMPLE
   'dwDegrees',          [0;0;0],...             % ang. vel. increment, degrees
   'dvStd',              [0;0;0],...             % vel perturbation std
   'dwStd',              [0;0;0],...             % ang vel pert. std, degrees
-  'botType',            'youbot',...           % youbot used
+  'botType',            'youbot',...            % youbot used
   'camera',             'footage');             % Type of camera - none, footage or robot
 
 

@@ -64,10 +64,12 @@ for rob = 1:numel(Robot)
     
     % Put a switch statement here for the type of camera
     
-    % Set up Youbot (arm position etc.)
-    % Ro.youbot.ArmPosition([pi,pi/8,0,0,pi*1.4]); % Faces roughly upwards
-    % Ro.youbot.ArmPosition([1.4,1.2,-2.6,0.3,2.9]); % Faces roughly to the right
-    
+    % Set up Youbot (initialise, arm position etc.)
+    if strcmp(Ri.camera, 'robot')
+        Ro.youbot = Youbot('youbot2');
+        Ro.youbot.ArmPosition([pi,pi/8,0,0,pi*1.4]); % Faces roughly upwards
+        Ro.youbot.ArmPosition([1.4,1.2,-2.6,0.3,2.9]); % Faces roughly to the right
+    end
     Ro.state.size = numel(Ro.state.x);   % state size
     Ro.state.r  = [];
 
