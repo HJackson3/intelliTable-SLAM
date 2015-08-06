@@ -81,7 +81,7 @@ if strcmp(Rob.camera, 'footage')
     load(feed); % loads the pre-recorded footage set in robData.m
 elseif strcmp(Rob.camera, 'robot')
     % Set up camera and files for post-processing
-    cam = ipcam('http://172.30.56.42:8080/?action=stream'); % Youbot webcam
+%     cam = ipcam('http://172.30.56.42:8080/?action=stream'); % Youbot webcam
 end
 
 %% IV. Main loop
@@ -130,14 +130,16 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
                     img     = f(currentFrame).image;
                     time    = f(currentFrame).time;
                 case 'robot'
-                    % Raw data is live feed
-                    
-                    if currentFrame == Tim.firstFrame
-                        Raw(sen).data = struct(...
-                            'time',  datetime);
-                    end
-                    img     = rot90(snapshot(cam));
-                    time    = datetime;                    
+                    % Changed to allow for testing with sim cam
+                    sim = true;
+%                     % Raw data is live feed
+%                     
+%                     if currentFrame == Tim.firstFrame
+%                         Raw(sen).data = struct(...
+%                             'time',  datetime);
+%                     end
+%                     img     = rot90(snapshot(cam));
+%                     time    = datetime;                    
                 otherwise
                     sim = true;
                     
@@ -164,10 +166,6 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
 
     % Process robots
     for rob = [Rob.rob]
-
-        % Update motion to avoid collision here - also simple navigation.
-            % Was thinking slow down to a point or turn left/right to
-            % avoid? Maybe both?
         
         % Robot motion
         % NOTE: in a regular, non-simulated SLAM, this line is not here and
@@ -178,12 +176,16 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
         % Rob(rob).con.u = SimRob(rob).con.u + Rob(rob).con.uStd.*randn(size(Rob(rob).con.uStd));
         Rob(rob) = motion(Rob(rob),Tim);
         
+        % Read what is in front of the robot, make velocity decision
+        % accordingly.
+        Rob(rob) = robReadLidar(Rob(rob), Opt);
+        
         % Youbot motion
         % Changes the course of the Youbot if the simRob's vel changes
         if strcmp(Rob(rob).camera, 'robot')
             v = Rob(rob).state.x;
             if any(Rob(rob).state.oldV ~= v(8:13))
-                sprintf('Updating robot''s movement')
+                fprintf('Updating robot''s movement\n')
                 Rob(rob) = robChangeVel(Rob(rob));
             end
         end

@@ -33,7 +33,7 @@
 Time = struct(...
   'dt',                   .1,...          % sampling time, seconds
   'firstFrame',           50,...           % first frame #
-  'lastFrame',            500);           % last frame #
+  'lastFrame',            5000);           % last frame #
 
 % Simulated world
 %   - Simulation landmark sets, playground dimensions
@@ -86,7 +86,7 @@ Robot{1} = struct(...                      % CONSTANT VELOCITY EXAMPLE
   'orientationDegrees', [0;0;0],...             % orientation, in degrees, [roll; pitch; yaw].
   'positionStd',        [0;0;0],...             % position error, std
   'orientationStd',     [0;0;0],...             % orient. error, std, degrees
-  'velocity',           [0.05;0;0],...          % lin. velocity
+  'velocity',           [0.1;0;0],...          % lin. velocity
   'angularVelDegrees',  [0;0;0],...             % ang. velocity, in degrees
   'velStd',             [0;0;0],...             % lin. vel. error, std
   'angVelStd',          [0;0;0],...             % ang. vel. error, std, degrees
@@ -95,7 +95,8 @@ Robot{1} = struct(...                      % CONSTANT VELOCITY EXAMPLE
   'dvStd',              [0;0;0],...             % vel perturbation std
   'dwStd',              [0;0;0],...             % ang vel pert. std, degrees
   'botType',            'youbot',...            % youbot used
-  'camera',             'footage');             % Type of camera - none, footage or robot
+  'camera',             'robot',...           % Type of camera - none, footage or robot
+  'lidar',              'youbot');              % youbot or other
 
 
 % Sensor things 
@@ -202,7 +203,7 @@ Opt = struct(...
       'innType',        'ortDst',...    % innovation type for lines
       'extPolicy',      false,...       % line extending policy ?
       'extSwitch',      10),...         % extension policy switch point in pixels
-    'appScTh',          .95),...       % Appearance score threshold for the zncc
+    'appScTh',          .95),...        % Appearance score threshold for the zncc
   'init',               struct(...      % Options for initialization
     'nbrInits',         [5 1],...       % number of inits [firstFrame, otherFrames]
     'initType',         'idpPnt',...    % Type of lmk to use for init
@@ -212,10 +213,15 @@ Opt = struct(...
     'plkLin',           struct(...      % opt. for Plucker and anchored Plucker lines init
       'nonObsMean',     [.1;0],...      % mean of non obs
       'nonObsStd',      [.25;1]),...    % std of non obs
-    'featQualityTh',    2000),...        % Feature quality threshold for harris point
-  'obs',                struct(...    % Observation options
-    'lines',            struct(...     % lines options
-      'minLength',      20)));          % minimum segment length
+    'featQualityTh',    2000),...       % Feature quality threshold for harris point
+  'obs',                struct(...      % Observation options
+    'lines',            struct(...      % lines options
+      'minLength',      20)),...        % minimum segment length
+  'lidar',              struct(...      % Options for the lidar navigation:
+    'version',          'turnOnSpot',...% type of lidar navigation, options: optDist, quickstop, turnOnSpot
+    'minDist',          1,...           % optimal distance from wall
+    'scanWidth',        100,...         % number of scans from Ranges to use
+    'searchAngV',       .1));          % angle of rotation when turning on the spot
         
 
 % Simulation options

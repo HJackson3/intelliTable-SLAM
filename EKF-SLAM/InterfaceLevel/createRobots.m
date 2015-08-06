@@ -22,6 +22,12 @@ for rob = 1:numel(Robot)
     Ro.botType = Ri.botType;
     Ro.camera  = Ri.camera;
     
+    if strcmp(Ri.lidar, 'youbot')
+       
+        Ro.lidar = rossubscriber('/youbot2/scan');
+        
+    end
+    
     Ro.sensors = [];
     
     % Robot frame in quaternion form
@@ -47,6 +53,7 @@ for rob = 1:numel(Robot)
             Ro.state.x    = [qp;v]; % state
             Ro.state.oldV = zeros(numel(v),1);
             Ro.state.P    = blkdiag(QP,V);
+            Ro.state.origV = v;
             
         case {'odometry'}
             % control
@@ -67,7 +74,7 @@ for rob = 1:numel(Robot)
     % Set up Youbot (initialise, arm position etc.)
     if strcmp(Ri.camera, 'robot')
         Ro.youbot = Youbot('youbot2');
-        Ro.youbot.ArmPosition([pi,pi/8,0,0,pi*1.4]); % Faces roughly upwards
+%         Ro.youbot.ArmPosition([pi,pi/8,0,0,pi*1.4]); % Faces roughly upwards
         Ro.youbot.ArmPosition([1.4,1.2,-2.6,0.3,2.9]); % Faces roughly to the right
     end
     Ro.state.size = numel(Ro.state.x);   % state size

@@ -11,12 +11,13 @@
 
 global MD PT % Mahalanobis distance and processing time
 
-MD = fopen('mahalanobis','w');
-PT = fopen('processing_time','w');
+MD = fopen('mahalanobis.t','w');
+PT = fopen('processing_time.t','w');
 
 % Run the SLAM algorithm
 slamtb;
 
+Robot.youbot.Stop;
 fclose('all');
 
 % Load the files used for post-processing
@@ -32,5 +33,5 @@ fprintf('Average mahalanobis distance:\t%s\n', ma);
 fprintf('Average processing time:\t\t%s\n', pr);
 
 % Show the figures for the individual values
-figure(3);plot(pt);title('Processing time');xlabel('Frame');ylabel('Time');
-figure(4);plot(md);title('Mahalanobis distance squared');ylabel('Mahalanobis distance squared');
+figure(3);plot(pt);title('Processing time.t');xlabel('Frame');ylabel('Time');
+figure(4);plot(md);title('Mahalanobis distance squared.t');ylabel('Mahalanobis distance squared');
