@@ -86,7 +86,7 @@ Robot{1} = struct(...                      % CONSTANT VELOCITY EXAMPLE
   'orientationDegrees', [0;0;0],...             % orientation, in degrees, [roll; pitch; yaw].
   'positionStd',        [0;0;0],...             % position error, std
   'orientationStd',     [0;0;0],...             % orient. error, std, degrees
-  'velocity',           [0.1;0;0],...           % lin. velocity
+  'velocity',           [.05;0;0],...           % lin. velocity
   'angularVelDegrees',  [0;0;0],...             % ang. velocity, in degrees
   'velStd',             [0;0;0],...             % lin. vel. error, std
   'angVelStd',          [0;0;0],...             % ang. vel. error, std, degrees
@@ -97,11 +97,11 @@ Robot{1} = struct(...                      % CONSTANT VELOCITY EXAMPLE
   'botType',            'youbot',...            % youbot used
   'camera',             'robot',...             % Type of camera - none, footage or robot
   'lidar',              'youbot',...            % youbot or other
-  'armPos',             [1.4,1.2,-2.6,0.3,2.9]);% Position of the youbot's arm
+  'armPos',             [pi*1.43,0.2,-1.65,3.35,pi-0.2]);% Position of the youbot's arm
 
 % Other useful arm positions
 % [1.45*pi-pi,pi/8,0,0,pi*1.45]     % Faces roughly upwards
-% [1.4,1.2,-2.6,0.3,2.9]            % Faces roughly to the right
+% [pi*1.43,0.2,-1.65,3.35,pi-0.2]   % Faces roughly to the right
 % [pi-0.17,0.2,-1.65,3.35,pi-0.2]   % Faces roughly forwards
 
 % Sensor things 
@@ -115,7 +115,7 @@ Sensor{1} = struct(...
   'type',               'pinHole',...               % type of sensor
   'robot',              1,...                       % robot where it is mounted
   'position',           [.2;0;.4],...               % position in robot
-  'orientationDegrees', [-90;0;-90],...             % orientation in robot, [roll; pitch; yaw] [-90;0;180] for to the right
+  'orientationDegrees', [-90;0;180],...             % orientation in robot, [roll; pitch; yaw] [-90;0;180] for to the right
   'positionStd',        [0;0;0],...                 % position error std
   'orientationStd',     [0;0;0],...                 % orient. error std
   'imageSize',          [480;640],...               % image size
@@ -218,15 +218,15 @@ Opt = struct(...
     'plkLin',           struct(...      % opt. for Plucker and anchored Plucker lines init
       'nonObsMean',     [.1;0],...      % mean of non obs
       'nonObsStd',      [.25;1]),...    % std of non obs
-    'featQualityTh',    2000),...       % Feature quality threshold for harris point
+    'featQualityTh',    800),...       % Feature quality threshold for harris point
   'obs',                struct(...      % Observation options
     'lines',            struct(...      % lines options
       'minLength',      20)),...        % minimum segment length
   'lidar',              struct(...      % Options for the lidar navigation:
-    'version',          'quickstop',...% type of lidar navigation, options: optDist, quickstop, turnOnSpot
+    'version',          'turnOnSpot',...% type of lidar navigation, options: optDist, quickstop, turnOnSpot
     'minDist',          1,...           % optimal distance from wall
     'scanWidth',        100,...         % number of scans from Ranges to use
-    'searchAngV',       .1));          % angle of rotation when turning on the spot
+    'searchAngV',       -5));           % angle of rotation when turning on the spot
         
 
 % Simulation options

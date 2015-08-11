@@ -18,10 +18,12 @@ for rob = 1:numel(Robot)
     Ro.name    = Ri.name;
     Ro.type    = Ri.type;
     Ro.motion  = Ri.motion;
+    
     % New for intSLAM
     Ro.botType = Ri.botType;
     Ro.camera  = Ri.camera;
     
+    % Set up lidar if used.
     if strcmp(Ri.lidar, 'youbot')
        
         Ro.lidar    = rossubscriber('/youbot2/scan');
@@ -48,6 +50,9 @@ for rob = 1:numel(Robot)
             Ro.con.uStd = [Ri.dvStd;deg2rad(Ri.dwStd)];
             Ro.con.U    = diag(Ro.con.uStd.^2);
             
+            Ro.con.oldU = zeros(size(Ro.con.u));
+            Ro.con.orU  = Ro.con.u;
+            
             % velocity states
             v = [Ri.velocity;deg2rad(Ri.angularVelDegrees)];
             V = diag([Ri.velStd;deg2rad(Ri.angVelStd)].^2);
@@ -56,7 +61,7 @@ for rob = 1:numel(Robot)
             Ro.state.x    = [qp;v]; % state
             Ro.state.oldV = zeros(numel(v),1);
             Ro.state.P    = blkdiag(QP,V);
-            Ro.state.origV = v;
+            Ro.state.origV= v;
             
         case {'odometry'}
             % control
@@ -78,7 +83,10 @@ for rob = 1:numel(Robot)
     if strcmp(Ri.camera, 'robot')
         Ro.youbot = Youbot('youbot2');
         Ro.youbot.ArmPosition(Ri.armPos);
+        pause(2);
     end
+    
+    
     Ro.state.size = numel(Ro.state.x);   % state size
     Ro.state.r  = [];
 

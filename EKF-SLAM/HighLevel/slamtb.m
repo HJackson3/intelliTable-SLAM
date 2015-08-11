@@ -106,18 +106,12 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
 
         % Robot motion
         SimRob(rob) = simMotion(SimRob(rob),Tim);
-%         
-%         % Simulate sensor observations
+        
+        % Simulate sensor observations
         for sen = SimRob(rob).sensors
-%                
+               
 %             % Observe simulated landmarks
 %             Raw(sen) =  simObservation(SimRob(rob), SimSen(sen), SimLmk, SimOpt) ;
-% 
-%         end % end process sensors
-% 
-%     end % end process robots
-
-        %for sen = Sen(1) % Sensor is chosen
 
             sim = false;
             switch Rob(rob).camera % Set image and time values depending on the type of video feed
@@ -132,16 +126,15 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
                     time    = f(currentFrame).time;
                 case 'robot'
                     % Raw data is live feed
-                    
-                    if currentFrame == Tim.firstFrame
-                        Raw(sen).data = struct(...
-                            'time',  datetime);
-                    end
-                    img     = rot90(rot90(rot90(imread(url))));
-                    time    = datetime;                    
+                    sim = true;
+%                     if currentFrame == Tim.firstFrame
+%                         Raw(sen).data = struct(...
+%                             'time',  datetime);
+%                     end
+%                     img     = rot90(rot90(rot90(imread(url))));
+%                     time    = datetime;                    
                 otherwise
                     sim = true;
-                    
             end % End switch camera
             
             if ~sim
@@ -155,10 +148,11 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
             else
                 Raw(sen) =  simObservation(SimRob(rob), SimSen(sen), SimLmk, SimOpt) ;
             end
+            
+        end % end process sensors
 
-        end % end of Sensor
-
-    end % end of Robot   
+    end % end process robots
+   
 
     % 2. ESTIMATION
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -174,11 +168,12 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
         % control input 'u'.
         % Rob(rob).con.u = SimRob(rob).con.u + Rob(rob).con.uStd.*randn(size(Rob(rob).con.uStd));
         Rob(rob) = motion(Rob(rob),Tim);
-        
         % Read what is in front of the robot, make velocity decision
         % accordingly.
         if Rob(rob).isLidar
-            Rob(rob) = robReadLidar(Rob(rob), Opt);
+            Rob(rob)                = robReadLidar(Rob(rob), Opt);
+            SimRob(rob).con.u       = Rob(rob).con.u;
+            SimRob(rob).state.x     = Rob(rob).state.x;
         end
         
         % Youbot motion
@@ -186,7 +181,7 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
         if strcmp(Rob(rob).camera, 'robot')
             v = Rob(rob).state.x;
             if any(Rob(rob).state.oldV ~= v(8:13))
-                fprintf('Updating robot''s movement\n')
+                fprintf('Updating robot''s movement\n');
                 Rob(rob) = robChangeVel(Rob(rob));
             end
         end

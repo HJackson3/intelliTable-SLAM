@@ -12,8 +12,14 @@ function Rob = robChangeVel( Rob )
 vel = Rob.state.x(8:9);
 angVel = Rob.state.x(13);
 
+% The z-angle based on the quartenion of position.
+[r1,~,~] = quat2angle(Rob.state.x(4:7)');
+
 %% Set the velocity of the robot to its new velocity
-Rob.youbot.BaseVelocity(vel(1),vel(2),angVel);
+vel(1) = vel(1)/cos(r1);
+
+Rob.youbot.BaseVelocity(vel(1),0,angVel);
+disp(vel(1))
 
 %% Set the old Velocity to the current
 Rob.state.oldV = Rob.state.x(8:13);

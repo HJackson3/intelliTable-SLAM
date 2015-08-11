@@ -36,7 +36,6 @@ switch Rob.motion
         
         % Covariances matrix update
         predictBlockEkf(r, F_x, Rob.con.U, F_u);
-        
        
     case  {'odometry'}  % 3D odometry
         

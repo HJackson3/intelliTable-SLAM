@@ -16,13 +16,15 @@ PT = fopen('processing_time.t','w');
 
 % Run the SLAM algorithm
 slamtb;
-
-Robot.youbot.Stop;
+hold off;
+for rob = [Rob.rob]
+    Rob(rob).youbot.Stop;
+end
 fclose('all');
 
 % Load the files used for post-processing
-md = load('mahalanobis');
-pt = load('processing_time');
+md = load('mahalanobis.t');
+pt = load('processing_time.t');
 
 % Compute the averages
 ma = mean(md);
