@@ -24,8 +24,11 @@ for rob = 1:numel(Robot)
     
     if strcmp(Ri.lidar, 'youbot')
        
-        Ro.lidar = rossubscriber('/youbot2/scan');
+        Ro.lidar    = rossubscriber('/youbot2/scan');
+        Ro.isLidar  = true;
         
+    else
+        Ro.isLidar  = false;
     end
     
     Ro.sensors = [];
@@ -74,8 +77,7 @@ for rob = 1:numel(Robot)
     % Set up Youbot (initialise, arm position etc.)
     if strcmp(Ri.camera, 'robot')
         Ro.youbot = Youbot('youbot2');
-%         Ro.youbot.ArmPosition([pi,pi/8,0,0,pi*1.4]); % Faces roughly upwards
-        Ro.youbot.ArmPosition([1.4,1.2,-2.6,0.3,2.9]); % Faces roughly to the right
+        Ro.youbot.ArmPosition(Ri.armPos);
     end
     Ro.state.size = numel(Ro.state.x);   % state size
     Ro.state.r  = [];

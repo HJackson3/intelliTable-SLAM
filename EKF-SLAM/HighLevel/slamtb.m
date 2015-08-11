@@ -81,7 +81,8 @@ if strcmp(Rob.camera, 'footage')
     load(feed); % loads the pre-recorded footage set in robData.m
 elseif strcmp(Rob.camera, 'robot')
     % Set up camera and files for post-processing
-%     cam = ipcam('http://172.30.56.42:8080/?action=stream'); % Youbot webcam
+    url = 'http://172.30.56.42:8080/?action=snapshot';
+%     cam = ipcam('http://172.30.56.42:8080/?action=stream?type=.mjpg'); % Youbot webcam
 end
 
 %% IV. Main loop
@@ -130,16 +131,14 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
                     img     = f(currentFrame).image;
                     time    = f(currentFrame).time;
                 case 'robot'
-                    % Changed to allow for testing with sim cam
-                    sim = true;
-%                     % Raw data is live feed
-%                     
-%                     if currentFrame == Tim.firstFrame
-%                         Raw(sen).data = struct(...
-%                             'time',  datetime);
-%                     end
-%                     img     = rot90(snapshot(cam));
-%                     time    = datetime;                    
+                    % Raw data is live feed
+                    
+                    if currentFrame == Tim.firstFrame
+                        Raw(sen).data = struct(...
+                            'time',  datetime);
+                    end
+                    img     = rot90(rot90(rot90(imread(url))));
+                    time    = datetime;                    
                 otherwise
                     sim = true;
                     
@@ -178,7 +177,9 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
         
         % Read what is in front of the robot, make velocity decision
         % accordingly.
-        Rob(rob) = robReadLidar(Rob(rob), Opt);
+        if Rob(rob).isLidar
+            Rob(rob) = robReadLidar(Rob(rob), Opt);
+        end
         
         % Youbot motion
         % Changes the course of the Youbot if the simRob's vel changes
