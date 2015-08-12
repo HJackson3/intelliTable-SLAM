@@ -45,11 +45,11 @@ end
 
 [r1, ~, ~] = quat2angle(Rob.state.x(4:7)');
 
-newV1 = newV1*cos(r1);
-newV2 = newV1*sin(r1);
+newVx = newV1*cos(r1);
+newVy = newV1*sin(r1);
 
-Rob.state.x(8:9)  = [newV1,newV2];          % Sets new x-velocity
-Rob.state.x(13)   = newAng;                 % Sets new z-angular velocity
+Rob.state.x(8:9)= [newVx,newVy];          % Sets new x-velocity
+Rob.state.x(13) = newAng;                 % Sets new z-angular velocity
 
 % create vector to alter con.
 newVal          = zeros(size(Rob.con.u));
