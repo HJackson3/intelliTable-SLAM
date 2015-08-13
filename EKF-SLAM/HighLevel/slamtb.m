@@ -64,6 +64,15 @@ robData;
     SimRob, SimSen, SimLmk,...  % Simulator data
     FigOpt);                    % User-defined graphic options
 
+% Last experiment
+try
+    load('last_loc.mat');
+    for rob = Rob.rob
+        Rob(rob).state.x = stX(rob);
+    end
+catch
+    
+end
 
 %% III. Initialize data logging
 % TODO: Create source and/or destination files and paths for data input and
@@ -73,16 +82,12 @@ robData;
 % etc., instead of creating large Matlab variables for data logging.
 
 % Clear user data - not needed anymore
-% clear Robot Sensor World Time   % clear all user data
+clear Robot Sensor World Time   % clear all user data
 
 % file = fopen('match','w'); % File for match_rate calculations
 
 if strcmp(Rob.camera, 'footage')
     load(feed); % loads the pre-recorded footage set in robData.m
-elseif strcmp(Rob.camera, 'robot')
-    % Set up camera and files for post-processing
-    url = 'http://172.30.56.42:8080/?action=snapshot';
-%     cam = ipcam('http://172.30.56.42:8080/?action=stream?type=.mjpg'); % Youbot webcam
 end
 
 %% IV. Main loop
@@ -126,13 +131,12 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
                     time    = f(currentFrame).time;
                 case 'robot'
                     % Raw data is live feed
-                    sim = true;
-%                     if currentFrame == Tim.firstFrame
-%                         Raw(sen).data = struct(...
-%                             'time',  datetime);
-%                     end
-%                     img     = rot90(rot90(rot90(imread(url))));
-%                     time    = datetime;                    
+                    if currentFrame == Tim.firstFrame
+                        Raw(sen).data = struct(...
+                            'time',  datetime);
+                    end
+                    img     = rot90(rot90(rot90(imread(Sen(sen).url))));
+                    time    = datetime;                    
                 otherwise
                     sim = true;
             end % End switch camera

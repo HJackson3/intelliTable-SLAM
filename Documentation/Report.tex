@@ -1,41 +1,60 @@
-\documentclass[11pt]{amsart}
+\documentclass[1pt, oneside]{article}
 \usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
 \geometry{a4paper}                   % ... or a4paper or a5paper or ... 
 %\geometry{landscape}                % Activate for for rotated page geometry
-\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage[parfill]{parskip}   	 % Activate to begin paragraphs with an empty line rather than an indent
 \usepackage{graphicx}
 \usepackage{amssymb}
 \usepackage{epstopdf}
 \usepackage{cite}
 \usepackage{hyperref}
 \DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+%\bibliographystyle{plain}
 
 \title{EKFmonoSLAM for the IntelliTable robot}
-\author{Harry Jackson}
-%\date{}                                           % Activate to display a given date or no date
+\author{Harry Jackson
+	\\University of Sheffield
+	\\
+	\texttt{hjackson3@sheffield.ac.uk}
+	}
+%\date{\today}                                           % Activate to display a given date or no date
 
 \begin{document}
 \maketitle
-%\tableofcontents
+\tableofcontents
+\clearpage
 \section{Introduction}
-The EKFmonoSLAM uses a EKF SLAM algorithm originally designed by Joan Sola~\cite{sola2012impact}~\cite{sola2008fusing}.
+The EKFmonoSLAM uses a EKF-SLAM algorithm originally designed by Joan Sola\cite{sola2012impact, sola2008fusing}.
 \section{Quick Set-up}
 This section outlines the steps that need to be taken to set up the SLAM algorithm software in MATLAB. This set-up assumes you have MATLAB already installed.
 \\
-To run the toolbox using an actual robot, the Robotics System Toolbox is required. The software for running the toolbox is publicly available online here\footnote{\url{https://github.com/HJackson3/intelliTable-SLAM}}.
+
+To run the toolbox using an actual robot, the Robotics System Toolbox is required. The software for running the toolbox is publicly available online\footnote{\url{https://github.com/HJackson3/intelliTable-SLAM}}. The repository contains detailed instructions on set-up.
+\\
+
+The software here is designed for use with a Kuka Youbot but the core functionality should work with any robot.
 
 \section{Analysis}
 
 \subsection{Processing speed considerations}
+The average processing time is roughly 0.2s. This means that the SLAM algorithm is currently working at 5Hz on a Intel 3.5GHz processor. This is not as fast as other visual SLAMs\cite{davison2003real}, but is fast enough for purpose as the intelliTable will not move at particularly high speeds.
+\\
+
+The slower processing speed has some advantages though; as the camera frame needs to be called on every iteration, only calling this 5 times per second means that it is unlikely that there will be lag between calling and receiving the image which might affect the ability of the SLAM.
 
 \subsection{Average mahalanobis distance}
 
-\section{Transfer to the intelliTable}
-
 \section{Next steps}
-At this current stage, the algorithm has been adapted to work with a camera attached to the robot, but the robot's navigation needs to be implemented as well. 
+At this current stage, the algorithm has been adapted to work with a camera attached to the Youbot, but path planning is still not put in place. 
+
+\subsubsection*{Navigation}
+The robot can move very simply - in a straight line until possible collision, then rotates clockwise until it would no longer collide - but no other navigation has been implemented yet.
+
+\subsection{Transfer to the intelliTable}
+
+\subsection{Possible improvements}
 
 \clearpage
-\bibliography{myBib}{}
 \bibliographystyle{plain}
+\bibliography{myBib}{}
 \end{document}

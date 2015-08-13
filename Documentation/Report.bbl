@@ -1,10 +1,20 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{}
 
-\bibitem{sola2012impact}
-Joan Sola, Teresa Vidal-Calleja, Javier Civera, and Jos{\'e}
-  Mar{\'i}a~Mart{\'i}nez Montiel.
+\bibitem[Davison, 2003]{davison2003real}
+Davison, A.~J. (2003).
+\newblock Real-time simultaneous localisation and mapping with a single camera.
+\newblock In {\em Computer Vision, 2003. Proceedings. Ninth IEEE International
+  Conference on}, pages 1403--1410. IEEE.
+
+\bibitem[Sola et~al., 2008]{sola2008fusing}
+Sola, J., Monin, A., Devy, M., and Vidal-Calleja, T. (2008).
+\newblock Fusing monocular information in multicamera slam.
+\newblock {\em Robotics, IEEE Transactions on}, 24(5):958--968.
+
+\bibitem[Sola et~al., 2012]{sola2012impact}
+Sola, J., Vidal-Calleja, T., Civera, J., and Montiel, J. M.~M. (2012).
 \newblock Impact of landmark parametrization on monocular ekf-slam with points
   and lines.
-\newblock {\em International journal of computer vision}, 97(3):339--368, 2012.
+\newblock {\em International journal of computer vision}, 97(3):339--368.
 
 \end{thebibliography}

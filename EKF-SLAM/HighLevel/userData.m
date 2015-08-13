@@ -33,7 +33,7 @@
 Time = struct(...
   'dt',                   .1,...          % sampling time, seconds
   'firstFrame',           50,...           % first frame #
-  'lastFrame',            5000);           % last frame #
+  'lastFrame',            1000);           % last frame #
 
 % Simulated world
 %   - Simulation landmark sets, playground dimensions
@@ -97,12 +97,12 @@ Robot{1} = struct(...                      % CONSTANT VELOCITY EXAMPLE
   'botType',            'youbot',...            % youbot used
   'camera',             'robot',...             % Type of camera - none, footage or robot
   'lidar',              'youbot',...            % youbot or other
-  'armPos',             [pi*1.43,0.2,-1.65,3.35,pi-0.2]);% Position of the youbot's arm
+  'armPos',             [1.45*pi-pi,pi/8,-0.3,0.3,pi*0.42]);% Position of the youbot's arm
 
 % Other useful arm positions
-% [1.45*pi-pi,pi/8,0,0,pi*1.45]     % Faces roughly upwards
-% [pi*1.43,0.2,-1.65,3.35,pi-0.2]   % Faces roughly to the right
-% [pi-0.17,0.2,-1.65,3.35,pi-0.2]   % Faces roughly forwards
+% [1.45*pi-pi,pi/8,-0.3,0.3,pi*0.42]    % Faces roughly upwards
+% [pi*1.43,0.2,-1.65,3.35,pi-0.2]       % Faces roughly to the right
+% [pi-0.17,0.2,-1.65,3.35,pi-0.2]       % Faces roughly forwards
 
 % Sensor things 
 %   - each sensor's type and parameters, noise, non-measurable prior.
@@ -114,9 +114,9 @@ Sensor{1} = struct(...
   'name',               'Micropix',...              % sensor name
   'type',               'pinHole',...               % type of sensor
   'robot',              1,...                       % robot where it is mounted
-  'position',           [.2;0;.4],...               % position in robot
-  'orientationDegrees', [-90;0;180],...             % orientation in robot, [roll; pitch; yaw] [-90;0;180] for to the right
-  'positionStd',        [0;0;0],...                 % position error std
+  'position',           [.08;.06;.3],...            % position in robot
+  'orientationDegrees', [0;0;90],...                % orientation in robot, [roll; pitch; yaw].
+  'positionStd',        [.04;0.03;0.15],...         % position error std
   'orientationStd',     [0;0;0],...                 % orient. error std
   'imageSize',          [480;640],...               % image size
   'pixErrorStd',        1.0,...                     % pixel error std
@@ -129,7 +129,12 @@ Sensor{1} = struct(...
     'skipOuter',        true,...                    % skip outer cells for initialization?
     'usedCell',         [],...                      % boolean matrix of flags indicating used cells
     'yticks',           [],...                      % ycoordinates of cell corners
-    'xticks',           []));                       % xcoordinates of cell corners
+    'xticks',           []),...                     % xcoordinates of cell corners
+  'url',                'http://172.30.56.42:8080/?action=snapshot'); % URL for the live camera
+
+% Useful sensor orientations
+% [0;0;90]      Directly upwards
+% [-90;0;180]   To the right
 
 % Sensor{2} = struct(...
 %   'id',                 2,...           % sensor identifier
