@@ -33,7 +33,7 @@
 Time = struct(...
   'dt',                   .1,...          % sampling time, seconds
   'firstFrame',           50,...           % first frame #
-  'lastFrame',            1000);           % last frame #
+  'lastFrame',            5000);           % last frame #
 
 % Simulated world
 %   - Simulation landmark sets, playground dimensions

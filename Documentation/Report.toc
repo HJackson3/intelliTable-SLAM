@@ -1,8 +1,0 @@
-\contentsline {section}{\numberline {1}Introduction}{2}{section.1}
-\contentsline {section}{\numberline {2}Quick Set-up}{2}{section.2}
-\contentsline {section}{\numberline {3}Analysis}{2}{section.3}
-\contentsline {subsection}{\numberline {3.1}Processing speed considerations}{2}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}Average mahalanobis distance}{2}{subsection.3.2}
-\contentsline {section}{\numberline {4}Next steps}{2}{section.4}
-\contentsline {subsection}{\numberline {4.1}Transfer to the intelliTable}{3}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}Possible improvements}{3}{subsection.4.2}
