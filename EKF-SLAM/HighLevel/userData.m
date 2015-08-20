@@ -33,7 +33,7 @@
 Time = struct(...
   'dt',                   .1,...          % sampling time, seconds
   'firstFrame',           50,...           % first frame #
-  'lastFrame',            5000);           % last frame #
+  'lastFrame',            2000);           % last frame #
 
 % Simulated world
 %   - Simulation landmark sets, playground dimensions
@@ -201,7 +201,7 @@ Sensor{1} = struct(...
 % Estimation options 
 Opt = struct(...
   'map',                struct(...      % options for the map
-    'numLmks',          73,...          % number of 3d landmarks
+    'numLmks',          160,...          % number of 3d landmarks
     'lmkSize',          6),...          % Size of landmark
   'correct',            struct(...      % options for lmk correction
     'reprojectLmks',    true,...        % reproject lmks after active search?
@@ -231,7 +231,7 @@ Opt = struct(...
     'version',          'turnOnSpot',...% type of lidar navigation, options: optDist, quickstop, turnOnSpot
     'minDist',          1,...           % optimal distance from wall
     'scanWidth',        100,...         % number of scans from Ranges to use
-    'searchAngV',       -5));           % angle of rotation when turning on the spot
+    'searchAngV',       -5));           % angle of rotation when turning on the spot (in degrees).
         
 
 % Simulation options

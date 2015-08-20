@@ -30,7 +30,7 @@
 % OK we start here
 
 % clear workspace and declare globals
-clear
+clearvars -except num_it MD PT
 global Map PT
 
 %% I. Specify user-defined options - EDIT USER DATA FILE userData.m

@@ -50,7 +50,7 @@ if nargout >= 3
     iZ = eye(size(Z,1))/Z;  % better than inv(Z) -- ask Matlab!
     if nargout >= 4
         MD2 = z'*iZ*z;
-        fprintf(MD,'%s\n',MD2);
+        %fprintf(MD,'%s\n',MD2); % Turn on for analysis of Mahalanobis distance.
     end
 end
 

@@ -17,9 +17,9 @@ for rob = [Rob.rob]
     if strcmp(Rob(rob).camera, 'robot')
         Rob(rob).youbot.Stop;
         % Save the map
-        st  = [Rob.state];  % All states for all robots
-        stX = [st.x];       % All states' xs for robots
-        save('last_loc.mat', 'Lmk', 'SimLmk', 'Obs', 'Map', 'stX');
+%         st  = [Rob.state];  % All states for all robots
+%         stX = [st.x];       % All states' xs for robots
+%         save('last_loc.mat', 'Lmk', 'SimLmk', 'Obs', 'Map', 'stX');
     end
 end
 
