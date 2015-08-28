@@ -19,21 +19,9 @@ for rob = 1:numel(Robot)
     Ro.type    = Ri.type;
     Ro.motion  = Ri.motion;
     
-    % New for intSLAM
-    Ro.botType = Ri.botType;
-    Ro.camera  = Ri.camera;
-    
-    % Set up lidar if used.
-    if strcmp(Ri.lidar, 'youbot')
-       
-        Ro.lidar    = rossubscriber('/youbot2/scan');
-        Ro.isLidar  = true;
-        
-    else
-        Ro.isLidar  = false;
-    end
-    
     Ro.sensors = [];
+    
+    Ro.footage.type = Ri.footage.type;
     
     % Robot frame in quaternion form
     ep = [Ri.position;deg2rad(Ri.orientationDegrees)];
@@ -77,16 +65,30 @@ for rob = 1:numel(Robot)
             error('Unknown motion model ''%s'' for robot %d.',Robot{rob}.motion,Robot{rob}.id);
     end
     
-    % Put a switch statement here for the type of camera
+    % Robot structures here could be refactored and placed in a new file
+    % (createRobotObj is made for this purpose).
+    switch Ri.botType
+        % Model for the KUKA youBot
+        case {'youbot'}
+            % Set up Youbot (initialise, arm position etc.)
+            
+            Ro.youbot = Youbot('youbot2'); % this is specifically for the youBot2
+            
+            % Robot arm
+            if Ri.devices.isArm
+                Ro.youbot.ArmPosition(Ri.devices.armPos);
+            end
     
-    % Set up Youbot (initialise, arm position etc.)
-    if strcmp(Ri.camera, 'robot')
-        Ro.youbot = Youbot('youbot2');
-        Ro.youbot.ArmPosition(Ri.armPos);
-        pause(2);
-    end
+            % Lidar
+            if Ri.devices.isLidar
+                Ro.lidar = rossubscriber(Ri.devices.lidarSub);
+            end
+            
+        otherwise
+            
+    end % End switch botType
     
-    
+    % Finish
     Ro.state.size = numel(Ro.state.x);   % state size
     Ro.state.r  = [];
 

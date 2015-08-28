@@ -65,6 +65,7 @@ robData;
     FigOpt);                    % User-defined graphic options
 
 % Last experiment
+% TODO refactor
 try
     load('last_loc.mat');
     for rob = Rob.rob
@@ -86,7 +87,7 @@ clear Robot Sensor World Time   % clear all user data
 
 % file = fopen('match','w'); % File for match_rate calculations
 
-if strcmp(Rob.camera, 'footage')
+if strcmp(Rob.footage.type, 'footage')
     load(feed); % loads the pre-recorded footage set in robData.m
 end
 
@@ -100,8 +101,9 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
         processing_time = seconds(now-old_now);
         fprintf(PT,'%s\n',processing_time);
     else
-        now = datetime;
+        [Raw, now] = firstFrameInit(); % Do first frame initialisation actions
     end
+   
         
     % 1. SIMULATION
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -114,43 +116,11 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
         
         % Simulate sensor observations
         for sen = SimRob(rob).sensors
-               
-%             % Observe simulated landmarks
-%             Raw(sen) =  simObservation(SimRob(rob), SimSen(sen), SimLmk, SimOpt) ;
 
-            sim = false;
-            switch Rob(rob).camera % Set image and time values depending on the type of video feed
-                case 'footage'
-                    % Raw data is camera feed
-                    
-                    if currentFrame == Tim.firstFrame
-                        Raw(sen).data = struct(...
-                            'time',  f(currentFrame).time);
-                    end
-                    img     = f(currentFrame).image;
-                    time    = f(currentFrame).time;
-                case 'robot'
-                    % Raw data is live feed
-                    if currentFrame == Tim.firstFrame
-                        Raw(sen).data = struct(...
-                            'time',  datetime);
-                    end
-                    img     = rot90(rot90(rot90(imread(Sen(sen).url))));
-                    time    = datetime;                    
-                otherwise
-                    sim = true;
-            end % End switch camera
-            
-            if ~sim
-                Raw(sen) = struct(...
-                    'type',         'image',                    ...
-                    'data',         struct(                     ...
-                      'img',        img,                        ... Captures the rotated image from the camera
-                      'oldTime',    Raw.data.time,              ... Captures last timestamp before reassigning
-                      'time',       time)                       ... Captures the time that the snapshot was taken
-                    );
+            if ~Sen(sen).sim
+                Raw(sen) = readCamera(Rob(rob), Sen(sen).url, currentFrame);
             else
-                Raw(sen) =  simObservation(SimRob(rob), SimSen(sen), SimLmk, SimOpt) ;
+                Raw(sen) = simObservation(SimRob(rob), SimSen(sen), SimLmk, SimOpt);
             end
             
         end % end process sensors
@@ -182,6 +152,7 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
         
         % Youbot motion
         % Changes the course of the Youbot if the simRob's vel changes
+        % TODO 
         if strcmp(Rob(rob).camera, 'robot')
             v = Rob(rob).state.x;
             if any(Rob(rob).state.oldV ~= v(8:13))

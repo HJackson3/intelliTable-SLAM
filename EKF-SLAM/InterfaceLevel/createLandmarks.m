@@ -10,6 +10,8 @@ function Lmk = createLandmarks(Opt)
 
 for lmk = 1:Opt.map.numLmks
 
+    Lmk = struct([]);
+    
     Lmk(lmk).lmk  = lmk;
     Lmk(lmk).id   = [];
     Lmk(lmk).type = '';

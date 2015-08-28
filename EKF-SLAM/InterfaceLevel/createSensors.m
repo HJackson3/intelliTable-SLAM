@@ -21,13 +21,14 @@ for sen = 1:numel(Sensor)
     So.id    = Si.id;
     So.name  = Si.name;
     So.type  = Si.type;
+    So.sim   = Si.sim;
 
     So.robot = Si.robot;
     
     % URL for the live camera
     So.url   = Si.url;
     
-    % Added 24/06/15 - the image grid for real images
+    % The image grid for real images
     So.imGrid           = Si.imGrid;
     So.imGrid.usedCell  = false(So.imGrid.numCells);
     So.imGrid.yticks    = round(linspace(0, So.imGrid.imSize(2), So.imGrid.numCells(2)+1));
