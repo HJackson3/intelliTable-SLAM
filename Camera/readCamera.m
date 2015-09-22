@@ -1,4 +1,4 @@
-function Raw = readCamera( Rob, url, currentFrame )
+function Raw = readCamera( Raw, Rob, url, currentFrame )
 %READCAMERA This function calls the frame from the camera object and
 %returns the image
 %   The camera object for the robot is called to receive the image; this
@@ -35,11 +35,10 @@ end % End switch camera
 
 % Final raw data structure created; this is how other functions refer to it
 % so be careful if editing.
-Raw = struct(...
-    'data',         struct(                     ...
+Raw.data =struct(                     ...
     'img',        img,                        ... Captures the rotated image from the camera
     'oldTime',    Raw.data.time,              ... Captures last timestamp before reassigning
-    'time',       time)                       ... Captures the time that the snapshot was taken
+    'time',       time                       ... Captures the time that the snapshot was taken
     );
 
 end

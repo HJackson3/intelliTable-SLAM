@@ -82,6 +82,7 @@ for rob = 1:numel(Robot)
             % Lidar
             if Ri.devices.isLidar
                 Ro.lidar = rossubscriber(Ri.devices.lidarSub);
+                Ro.devices.isLidar = Ri.devices.isLidar;
             end
             
         otherwise

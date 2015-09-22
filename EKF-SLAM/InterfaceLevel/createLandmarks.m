@@ -8,9 +8,9 @@ function Lmk = createLandmarks(Opt)
 
 %   Copyright 2008-2009 Joan Sola @ LAAS-CNRS.
 
-for lmk = 1:Opt.map.numLmks
+ Lmk = struct([]);
 
-    Lmk = struct([]);
+for lmk = 1:Opt.map.numLmks
     
     Lmk(lmk).lmk  = lmk;
     Lmk(lmk).id   = [];

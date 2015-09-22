@@ -31,7 +31,7 @@
 
 % clear workspace and declare globals
 clearvars -except num_it MD PT
-global Map PT
+global Map %PT
 
 %% I. Specify user-defined options - EDIT USER DATA FILE userData.m
 
@@ -99,9 +99,9 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
         old_now = now;
         now = datetime;
         processing_time = seconds(now-old_now);
-        fprintf(PT,'%s\n',processing_time);
+%        fprintf(PT,'%s\n',processing_time);
     else
-        [Raw, now] = firstFrameInit(); % Do first frame initialisation actions
+        [Raw, now] = firstFrameInit(Raw, Sen); % Do first frame initialisation actions
     end
    
         
@@ -117,8 +117,8 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
         % Simulate sensor observations
         for sen = SimRob(rob).sensors
 
-            if ~Sen(sen).sim
-                Raw(sen) = readCamera(Rob(rob), Sen(sen).url, currentFrame);
+            if Sen(sen).sim == false
+                Raw(sen) = readCamera(Raw(sen), Rob(rob), Sen(sen).url, currentFrame);
             else
                 Raw(sen) = simObservation(SimRob(rob), SimSen(sen), SimLmk, SimOpt);
             end
@@ -144,7 +144,7 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
         Rob(rob) = motion(Rob(rob),Tim);
         % Read what is in front of the robot, make velocity decision
         % accordingly.
-        if Rob(rob).isLidar
+        if Rob(rob).devices.isLidar
             Rob(rob)                = robReadLidar(Rob(rob), Opt);
             SimRob(rob).con.u       = Rob(rob).con.u;
             SimRob(rob).state.x     = Rob(rob).state.x;
@@ -153,7 +153,7 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
         % Youbot motion
         % Changes the course of the Youbot if the simRob's vel changes
         % TODO 
-        if strcmp(Rob(rob).camera, 'robot')
+        if strcmp(Rob(rob).footage.type, 'ipcam')
             v = Rob(rob).state.x;
             if any(Rob(rob).state.oldV ~= v(8:13))
                 fprintf('Updating robot''s movement\n');
@@ -161,7 +161,7 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
             end
         end
         
-        if ~sim
+        if ~Sen(sen).sim
             Tim.dt = seconds(Raw.data.time - Raw.data.oldTime);
         end
         Map.t = Map.t + Tim.dt; % Change dt here to the difference between the timestamps

@@ -98,8 +98,8 @@ Robot{1} = struct(...                      % CONSTANT VELOCITY EXAMPLE
   'footage',            struct(...              % Information on the camera
     'type',             'ipcam'),...            % Type of camera - none, footage or robot; more can be added here as these define the models
   'devices',            struct(...              % Booleans describing the presence of certain devices and info relating to them
-    'isLidar',            'true',...            % Lidar for object avoidance.
-    'isArm',              'true',...            % Robotic arm; camera may be mounted to it.
+    'isLidar',            true,...              % Lidar for object avoidance.
+    'isArm',              true,...              % Robotic arm; camera may be mounted to it.
     'lidarSub',           '/youbot2/scan',...   % rossubscribe address for ROS
     'armPos',             [1.45*pi-pi,pi/8,-0.3,0.3,pi*0.42]));% Position of the robot's arm
 
@@ -117,7 +117,7 @@ Sensor{1} = struct(...
   'id',                 1,...                       % sensor identifier
   'name',               'Micropix',...              % sensor name
   'type',               'pinHole',...               % type of sensor
-  'sim',                'false',...                 % Boolean describing whether the sensor is simulated.
+  'sim',                false,...                   % Boolean describing whether the sensor is simulated.
   'robot',              1,...                       % robot where it is mounted
   'position',           [.08;.06;.3],...            % position in robot
   'orientationDegrees', [0;0;90],...                % orientation in robot, [roll; pitch; yaw].
@@ -206,7 +206,7 @@ Sensor{1} = struct(...
 % Estimation options 
 Opt = struct(...
   'map',                struct(...      % options for the map
-    'numLmks',          160,...          % number of 3d landmarks
+    'numLmks',          73,...          % number of 3d landmarks
     'lmkSize',          6),...          % Size of landmark
   'correct',            struct(...      % options for lmk correction
     'reprojectLmks',    true,...        % reproject lmks after active search?
