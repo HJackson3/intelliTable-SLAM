@@ -9,8 +9,6 @@ function [m,M_l] = seg2pvLin(l)
 
 %   Copyright 2008-2009 Joan Sola @ LAAS-CNRS.
 
-m = zeros(6,1);
-
 m(1:3,1) = l(1:3);
 m(4:6,1) = l(4:6)-l(1:3);
 

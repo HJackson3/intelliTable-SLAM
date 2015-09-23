@@ -1,14 +1,40 @@
-function v = q2v(q)
+function [v, V_q] = q2v(q)
 
 %Q2V Quaternion to rotation vector conversion.
 %   Q2V(Q) transforms the quaternion Q into a rotation vector representing
 %   the same rotation.
 
 %   Copyright 2008-2009 Joan Sola @ LAAS-CNRS.
+%   Copyright 2015-     Joan Sola @ IRI-UPC-CSIC.
 
-[a,u] = q2au(q);
-v = a*u;
+if nargout == 1
+    
+    [a,u] = q2au(q);
+    v = a*u;
+    
+else
 
+    [a,u,A_q,U_q] = q2au(q);
+    v   = a*u;
+    V_a = u;
+    V_u = a; % = a*eye(3);
+    
+    if ~isnumeric(a) || a > 1e-7
+        V_q = V_a*A_q + V_u*U_q;
+    else
+        V_q = [zeros(3,1) 2*eye(3)];
+    end
+
+end
+
+return
+
+%%
+syms q0 q1 q2 q3 real
+q = [q0;q1;q2;q3];
+[v, V_q] = q2v(q);
+
+simplify(V_q - jacobian(v,q))
 
 
 % ========== End of function - Start GPL license ==========

@@ -42,9 +42,7 @@ Robot{1} = struct(...                     % ODOMETRY EXAMPLE
   'dx',                 [.08;0;0],...     % position increment 8
   'daDegrees',          [0;0;0.9],...     % angle increment, degrees 9
   'dxStd',              0.005*[1;1;1],...  % odo linear error std
-  'daStd',              0.05*[1;1;1],...     % odo ang error std, degrees
-  'botType',            'youbot',...            % youbot used
-  'camera',             'footage');             % Type of camera - none, footage or robot
+  'daStd',              0.05*[1;1;1]);     % odo ang error std, degrees
 
 % Robot{2} = struct(...                     % CONSTANT VELOCITY EXAMPLE
 %   'id',                 3,...           % robot identifier
@@ -86,12 +84,8 @@ Sensor{1} = struct(...
   'distortion',         [],...          % distortion params
   'frameInMap',         false,...       % add sensor frame in slam map?
   'imGrid',             struct(...      % grid for Active Search
-    'imSize',           [480;640],...               % copy of imageSize
-    'numCells',         [8,6],...         % number of H and V grid cells
-    'skipOuter',        true,...           % skip outer cells for initialization?
-    'usedCell',         [],...                      % boolean matrix of flags indicating used cells
-    'yticks',           [],...                      % ycoordinates of cell corners
-    'xticks',           []));                       % xcoordinates of cell corners
+    'numCells',         [8;6],...         % number of H and V grid cells
+    'skipOuter',        true));           % skip outer cells for initialization?
 
 % Sensor{2} = struct(...
 %   'id',                 2,...           % sensor identifier

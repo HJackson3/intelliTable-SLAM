@@ -27,11 +27,11 @@
 %   Copyright Teresa Vidal-Calleja @ ACFR.
 %   See COPYING.TXT for full copyright license.
 
-% OK we start here
+%% OK we start here
 
 % clear workspace and declare globals
-clearvars -except num_it MD PT
-global Map %PT
+clear
+global Map    
 
 %% I. Specify user-defined options - EDIT USER DATA FILE userData.m
 
@@ -64,16 +64,6 @@ robData;
     SimRob, SimSen, SimLmk,...  % Simulator data
     FigOpt);                    % User-defined graphic options
 
-% Last experiment
-% TODO refactor
-try
-    load('last_loc.mat');
-    for rob = Rob.rob
-        Rob(rob).state.x = stX(rob);
-    end
-catch
-    
-end
 
 %% III. Initialize data logging
 % TODO: Create source and/or destination files and paths for data input and
@@ -85,11 +75,6 @@ end
 % Clear user data - not needed anymore
 clear Robot Sensor World Time   % clear all user data
 
-% file = fopen('match','w'); % File for match_rate calculations
-
-if strcmp(Rob.footage.type, 'footage')
-    load(feed); % loads the pre-recorded footage set in robData.m
-end
 
 %% IV. Main loop
 for currentFrame = Tim.firstFrame : Tim.lastFrame
@@ -126,14 +111,15 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
         end % end process sensors
 
     end % end process robots
-   
+
+    
 
     % 2. ESTIMATION
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     % Process robots
     for rob = [Rob.rob]
-        
+
         % Robot motion
         % NOTE: in a regular, non-simulated SLAM, this line is not here and
         % noise just comes from the real world. Here, the estimated robot
@@ -169,15 +155,15 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
         % Process sensor observations
         for sen = Rob(rob).sensors
 
-            % Observe known landmarks
+            % Observe knowm landmarks
             [Rob(rob),Sen(sen),Lmk,Obs(sen,:)] = correctKnownLmks( ...
                 Rob(rob),   ...
                 Sen(sen),   ...
                 Raw(sen),   ...
                 Lmk,        ...   
                 Obs(sen,:), ...
-                Opt);
-            
+                Opt) ;
+
             % Initialize new landmarks
             ninits = Opt.init.nbrInits(1 + (currentFrame ~= Tim.firstFrame));
             for i = 1:ninits
@@ -193,6 +179,7 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
         end % end process sensors
 
     end % end process robots
+
 
     % 3. VISUALIZATION
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -241,12 +228,10 @@ for currentFrame = Tim.firstFrame : Tim.lastFrame
 
 end
 
-%% V. Robot change of movement
-
-
-%% VI. Post-processing
+%% V. Post-processing
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Enter post-processing code here
+
 
 
 % ========== End of function - Start GPL license ==========

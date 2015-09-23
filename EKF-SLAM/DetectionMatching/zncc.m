@@ -55,7 +55,7 @@ N = numel(I);
 den = (N*SII - SI^2)*(N*SJJ - SJ^2);
 
 if den < N
-    % figure(5);image(J);colormap(gray(255));axis image
+%     figure(5);image(J);colormap(gray(255));axis image
     sc = 0;
 else
     sc = (N*SIJ - SI*SJ)/sqrt(den);
